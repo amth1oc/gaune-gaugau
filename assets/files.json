@@ -1,0 +1,76 @@
+{
+  "backgrounds": [
+    "Cozy Sunset Neighborhood Game Scene.webp",
+    "Golden Hour in a Vietnamese Village.webp",
+    "Golden Valley by the Water.webp",
+    "Sunny Pet Yard Adventure.webp",
+    "Sunset Cafe Plaza in a Storybook Town.webp",
+    "Sunset Promenade in Vietnam.webp"
+  ],
+  "ui": [],
+  "audio": [
+    "aibark-1.mp3",
+    "aibark-2.mp3",
+    "aibark-3.mp3",
+    "aibark-4.mp3",
+    "aibark-5.mp3",
+    "bark-1.mp3",
+    "bark-2.mp3",
+    "bark-3.mp3",
+    "bark-4.mp3",
+    "bark-5.mp3",
+    "countdown-go.mp3",
+    "countdown-tick.mp3",
+    "music-battle.mp3",
+    "music-menu.mp3"
+  ],
+  "charactersLoose": [],
+  "characters": {
+    "beagle": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "chow": [],
+    "corgi": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "golden": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "husky": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "labrador": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "malamute": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "poodle": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "pug": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ],
+    "shiba": [
+      "bark.webp",
+      "icon.webp",
+      "idle.webp"
+    ]
+  }
+}

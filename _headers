@@ -1,0 +1,37 @@
+# Netlify: tiêu đề HTTP — an toàn + tải nhanh + cho phép mic
+/*
+  Permissions-Policy: microphone=(self), camera=(), geolocation=(), payment=(), usb=()
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000
+  Cross-Origin-Opener-Policy: same-origin
+  # Chỉ cho chạy mã của chính trang này. Cho phép: Google Fonts, PeerJS (đấu online). TURN chạy qua WebRTC nên không cần khai ở đây.
+  # Dùng máy chủ PeerJS riêng (net-config.js → PEER_SERVER)? Thêm https://tên-máy-chủ và wss://tên-máy-chủ vào connect-src.
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'
+
+# Ảnh/âm thanh/icon: cache 1 ngày (lần mở sau, service worker trả ngay từ bộ nhớ và tự kiểm tra bản mới ở nền)
+/assets/*
+  Cache-Control: public, max-age=86400
+/icons/*
+  Cache-Control: public, max-age=86400
+
+# Danh sách file & cấu hình asset: luôn kiểm tra bản mới
+/assets/files.json
+  Cache-Control: no-cache
+/assets/manifest.json
+  Cache-Control: no-cache
+
+# Mã game & CSS: luôn kiểm tra bản mới (tránh lỗi lệch phiên bản sau khi deploy)
+/
+  Cache-Control: public, max-age=0, must-revalidate
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+/js/*
+  Cache-Control: public, max-age=0, must-revalidate
+/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+/sw.js
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=86400

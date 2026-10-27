@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#241510">
+  <meta name="color-scheme" content="light">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Gaune – Gâu Gâu">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Gaune – Gâu Gâu – Buồn bực? Sủa vào mic để xả stress cùng mình</title>
+  <meta name="description" content="Buồn bực thì sủa lên để giải tỏa cùng mình! Gaune – Gâu Gâu: sủa vào mic để đẩy lùi đối thủ. Chơi với bot hoặc đấu online 2 người, miễn phí ngay trên trình duyệt.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://game-cho-sua.netlify.app/">
+
+  <!-- Chia sẻ link (Facebook, Zalo, Messenger, X...) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Gaune – Gâu Gâu">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:title" content="🐾 Gaune – Gâu Gâu – Buồn bực thì sủa lên!">
+  <meta property="og:description" content="Buồn bực? Sủa lên để xả stress cùng mình! Sủa vào mic để đẩy lùi đối thủ – chơi với bot hoặc đấu online 2 người, miễn phí ngay trên điện thoại.">
+  <meta property="og:url" content="https://game-cho-sua.netlify.app/">
+  <meta property="og:image" content="https://game-cho-sua.netlify.app/icons/og-gaune-v3.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Gaune – Gâu Gâu – Buồn bực? Sủa lên cho đỡ stress! Đấu với bot hoặc online 2 người">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🐾 Gaune – Gâu Gâu – Buồn bực thì sủa lên!">
+  <meta name="twitter:description" content="Buồn bực? Sủa lên để xả stress cùng mình! Sủa vào mic để đẩy lùi đối thủ – chơi với bot hoặc đấu online 2 người, miễn phí ngay trên điện thoại.">
+  <meta name="twitter:image" content="https://game-cho-sua.netlify.app/icons/og-gaune-v3.jpg">
+
+  <!-- Biểu tượng & cài lên màn hình chính -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon-48.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <!-- Đặt ngôn ngữ + sáng/tối trước khi vẽ trang (tránh chớp) -->
+  <script src="js/boot-prefs.js"></script>
+
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "VideoGame", "name": "Gaune – Gâu Gâu", "alternateName": ["Gaune", "Game sủa xả stress"], "description": "Buồn bực thì sủa lên để giải tỏa cùng mình! Gaune – Gâu Gâu: sủa vào mic để đẩy lùi đối thủ. Chơi với bot hoặc đấu online 2 người, miễn phí ngay trên trình duyệt.", "url": "https://game-cho-sua.netlify.app/", "image": "https://game-cho-sua.netlify.app/icons/og-gaune-v3.jpg", "inLanguage": "vi", "genre": ["Arcade", "Đối kháng"], "gamePlatform": "Trình duyệt web", "applicationCategory": "GameApplication", "operatingSystem": "Mọi thiết bị có trình duyệt và micro", "playMode": ["SinglePlayer", "MultiPlayer"], "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "VND"}}
+  </script>
+
+  <!-- Font: nạp không chặn hiển thị (js/font-loader.js đổi media khi tải xong); chữ hệ thống hiện ngay trong lúc chờ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="gfonts" rel="stylesheet" media="print" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Baloo+2:wght@500;600;700;800&family=Lobster&display=swap">
+  <script src="js/font-loader.js" defer></script>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Baloo+2:wght@500;600;700;800&family=Lobster&display=swap"></noscript>
+  <!-- CSS gộp từ 16 file nguồn trong css/ bằng tools/build-css.mjs (sửa CSS xong nhớ chạy lại lệnh đó) -->
+  <link rel="stylesheet" href="css/bundle.css">
+  <link rel="stylesheet" href="css/identity.css">
+  <!-- MODULEPRELOAD:START (tự sinh bởi tools/gen-preload.mjs — đừng sửa tay) -->
+  <link rel="modulepreload" href="js/core/EventBus.js">
+  <link rel="modulepreload" href="js/core/ScreenManager.js">
+  <link rel="modulepreload" href="js/core/SaveManager.js">
+  <link rel="modulepreload" href="js/core/I18n.js">
+  <link rel="modulepreload" href="js/audio/SoundManager.js">
+  <link rel="modulepreload" href="js/data/characters.js">
+  <link rel="modulepreload" href="js/data/stages.js">
+  <link rel="modulepreload" href="js/core/AssetLoader.js">
+  <link rel="modulepreload" href="js/core/Perf.js">
+  <link rel="modulepreload" href="js/audio/MicrophoneManager.js">
+  <link rel="modulepreload" href="js/audio/BarkDetector.js">
+  <link rel="modulepreload" href="js/data/config.js">
+  <link rel="modulepreload" href="js/audio/MicTest.js">
+  <link rel="modulepreload" href="js/core/Theme.js">
+  <link rel="modulepreload" href="js/core/Toggles.js">
+  <link rel="modulepreload" href="js/rendering/SceneRenderer.js">
+  <link rel="modulepreload" href="js/rendering/DogRenderer.js">
+  <link rel="modulepreload" href="js/effects/MenuHero.js">
+  <link rel="modulepreload" href="js/screens/MenuScreen.js">
+  <link rel="modulepreload" href="js/game/CharStats.js">
+  <link rel="modulepreload" href="js/screens/CharacterSelectScreen.js">
+  <link rel="modulepreload" href="js/game/DogCharacter.js">
+  <link rel="modulepreload" href="js/game/AIOpponent.js">
+  <link rel="modulepreload" href="js/game/GaugeController.js">
+  <link rel="modulepreload" href="js/game/ComboSystem.js">
+  <link rel="modulepreload" href="js/game/BattleManager.js">
+  <link rel="modulepreload" href="js/audio/MicNormalizer.js">
+  <link rel="modulepreload" href="js/effects/ScreenShake.js">
+  <link rel="modulepreload" href="js/effects/BarkTextEffect.js">
+  <link rel="modulepreload" href="js/effects/ParticleSystem.js">
+  <link rel="modulepreload" href="js/screens/BattleScreen.js">
+  <link rel="modulepreload" href="js/screens/ResultScreen.js">
+  <link rel="modulepreload" href="js/net/net-config.js">
+  <link rel="modulepreload" href="js/net/NetSession.js">
+  <link rel="modulepreload" href="js/screens/OnlineLobbyScreen.js">
+  <link rel="modulepreload" href="js/screens/OnboardingScreen.js">
+  <link rel="modulepreload" href="js/main.js">
+  <!-- MODULEPRELOAD:END -->
+</head>
+
+<body>
+  <noscript><p style="position:fixed;inset:0;z-index:99999;margin:0;padding:24px;background:#241510;color:#ffd75a;font:600 18px/1.5 system-ui,sans-serif;text-align:center">Gaune – Gâu Gâu cần bật JavaScript để chơi. Hãy bật JavaScript trong trình duyệt rồi tải lại trang nhé! 🐕</p></noscript>
+  <div id="app">
+    <!-- Nền chung cho các màn hình menu (đổi theo sáng/tối) — 1 lớp duy nhất, nhẹ GPU -->
+    <div id="app-bg" aria-hidden="true"></div>
+
+    <!-- Nút Ngôn ngữ + Sáng/Tối cho các màn hình phụ (menu có bản riêng trong thanh trên) -->
+    <div class="quick-toggles" id="quick-toggles">
+      <button type="button" class="menu-icon-btn tg-btn js-lang-btn" aria-label="Language"><span class="tg-code">EN</span></button>
+      <button type="button" class="menu-icon-btn tg-btn js-theme-btn" aria-label="Theme"><svg class="tg-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="tg-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></button>
+    </div>
+
+    <!-- Màn hình chờ khi đang nạp assets -->
+    <div id="boot" class="boot">
+      <div class="boot-container">
+        <div class="boot-paw">
+          <svg viewBox="0 0 24 24">
+            <ellipse cx="12" cy="15" rx="5" ry="4" />
+            <circle cx="6" cy="8" r="2.5" />
+            <circle cx="10" cy="5" r="2.5" />
+            <circle cx="14" cy="5" r="2.5" />
+            <circle cx="18" cy="8" r="2.5" />
+          </svg>
+        </div>
+        <div class="boot-text" data-i18n="boot.text">Đang chuẩn bị đấu trường sủa... 🐕</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         MENU SCREEN
+    ═══════════════════════════════ -->
+    <div id="screen-menu" class="screen">
+      <div class="menu-bg-decoration">
+        <div class="bg-paw bg-paw-1">🐾</div>
+        <div class="bg-paw bg-paw-2">🦴</div>
+        <div class="bg-paw bg-paw-3">🐾</div>
+        <div class="bg-paw bg-paw-4">✨</div>
+      </div>
+
+      <!-- Top Utility Bar: Woof Points & Settings / Rankings -->
+      <div class="menu-top-bar">
+        <div class="menu-wp-display">
+          <span class="wp-gem-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <ellipse cx="12" cy="15" rx="5" ry="4" />
+              <circle cx="6" cy="8" r="2.5" />
+              <circle cx="10" cy="5" r="2.5" />
+              <circle cx="14" cy="5" r="2.5" />
+              <circle cx="18" cy="8" r="2.5" />
+            </svg>
+          </span>
+          <span id="menu-wp-count" class="wp-value">0</span>
+          <span class="wp-label" title="Gâu Point">GP</span>
+        </div>
+        <div class="menu-top-actions">
+          <button type="button" class="menu-icon-btn tg-btn js-lang-btn" aria-label="Language"><span class="tg-code">EN</span></button>
+      <button type="button" class="menu-icon-btn tg-btn js-theme-btn" aria-label="Theme"><svg class="tg-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="tg-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></button>
+          <button id="btn-rankings" class="menu-icon-btn" title="Bảng xếp hạng" aria-label="Bảng xếp hạng" data-i18n-attr="title:common.rankings;aria-label:common.rankings">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V19H8v2h8v-2h-3v-3.1c1.84-.39 3.29-1.83 3.61-3.06C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" />
+            </svg>
+          </button>
+          <button id="btn-settings" class="menu-icon-btn btn-settings-circle" title="Cài đặt" aria-label="Cài đặt" data-i18n-attr="title:common.settings;aria-label:common.settings">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="menu-content">
+        <!-- Animated Hero Dogs -->
+        <canvas id="menu-hero" class="menu-hero" width="640" height="300" aria-hidden="true"></canvas>
+
+        <!-- Sunny 3D Arcade Title -->
+        <div class="menu-logo">
+          <div class="logo-badge-top" data-i18n="menu.badge">🐾 SỦA LÊN · XẢ STRESS 🐾</div>
+          <h1 class="logo-text" aria-label="Gaune – Gâu Gâu – sủa lên, xả stress" data-i18n-attr="aria-label:menu.logoAria">
+            <span class="logo-title-row title-row-top">GAUNE</span>
+            <span class="logo-title-row title-row-bottom">GÂU GÂU</span>
+          </h1>
+          <div class="logo-sub" data-i18n="menu.sub">⚡ SỦA CÀNG TO · ĐẨY CÀNG MẠNH! ⚡</div>
+        </div>
+
+        <!-- 3 Illustrated Banner Cards (Gaune – Gâu Gâu) -->
+        <nav class="menu-nav" id="menu-nav">
+          <!-- Card 1: DOG ROAD / CHIẾN ĐẤU NGAY -->
+          <button id="btn-play" class="menu-banner-card card-play">
+            <div class="banner-card-bg"></div>
+            <div class="banner-card-avatar">
+              <img src="assets/characters/shiba/idle.webp" loading="lazy" decoding="async" alt="Shiba" class="banner-dog-img">
+            </div>
+            <div class="banner-card-content">
+              <div class="banner-tag" data-i18n="menu.play.tag">CHIẾN DỊCH CHÍNH</div>
+              <div class="banner-title">DOG ROAD</div>
+              <div class="banner-desc" data-i18n="menu.play.desc">Chiến Đấu Ngay ▸</div>
+            </div>
+            <div class="banner-card-paw">🐾</div>
+          </button>
+
+          <!-- Card 2: DOG SURVIVAL / ONLINE 2 NGƯỜI -->
+          <button id="btn-online" class="menu-banner-card card-online">
+            <div class="banner-card-bg"></div>
+            <div class="banner-card-avatar">
+              <img src="assets/characters/corgi/idle.webp" loading="lazy" decoding="async" alt="Corgi" class="banner-dog-img">
+            </div>
+            <div class="banner-card-content">
+              <div class="banner-tag" data-i18n="menu.online.tag">ĐẤU BẠN BÈ · MẠNG</div>
+              <div class="banner-title">DOG SURVIVAL</div>
+              <div class="banner-desc" data-i18n="menu.online.desc">Online 2 Người ▸</div>
+            </div>
+            <div class="banner-card-paw">⚡</div>
+          </button>
+
+          <!-- Card 3: PICK YOUR DOG / CHIẾN BINH CHÓ -->
+          <button id="btn-characters" class="menu-banner-card card-characters">
+            <div class="banner-card-bg"></div>
+            <div class="banner-card-avatars">
+              <img src="assets/characters/corgi/idle.webp" loading="lazy" decoding="async" alt="Corgi" class="trio-dog trio-1">
+              <img src="assets/characters/shiba/idle.webp" loading="lazy" decoding="async" alt="Shiba" class="trio-dog trio-2">
+              <img src="assets/characters/poodle/idle.webp" loading="lazy" decoding="async" alt="Poodle" class="trio-dog trio-3">
+            </div>
+            <div class="banner-card-content">
+              <div class="banner-tag" data-i18n="menu.pick.tag">BỘ SƯU TẬP</div>
+              <div class="banner-title">PICK YOUR DOG</div>
+              <div class="banner-desc" data-i18n="menu.pick.desc">Chọn Chiến Binh ▸</div>
+            </div>
+            <div class="banner-card-paw">✨</div>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         CHARACTER SELECT SCREEN
+    ═══════════════════════════════ -->
+    <div id="screen-character-select" class="screen">
+      <button id="btn-back-from-select" class="btn-back" data-i18n="common.back">Quay lại</button>
+      <h2 class="screen-title" data-i18n="sel.title">Chọn chiến binh</h2>
+      <div class="select-layout">
+        <div id="character-grid" class="character-grid">
+          <!-- Populated by CharacterSelectScreen.js -->
+        </div>
+        <div class="select-preview-panel">
+          <div id="preview-dog-canvas" class="preview-dog-canvas">
+            <canvas id="preview-canvas" width="200" height="200"></canvas>
+          </div>
+          <div class="preview-info">
+            <div id="preview-name" class="preview-name" data-i18n="sel.none">Chọn nhân vật</div>
+            <div id="preview-desc" class="preview-desc">---</div>
+            <div id="preview-stats" class="preview-stats"></div>
+            <div id="preview-barkwords" class="preview-barkwords"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stage-picker">
+        <div class="stage-picker-title" data-i18n="sel.stage">Bối cảnh</div>
+        <div id="stage-chips" class="stage-chips"><!-- Populated by CharacterSelectScreen.js --></div>
+      </div>
+      <div class="tier-picker">
+        <div class="stage-picker-title" data-i18n="tier.title">Cấp bot</div>
+        <div id="tier-chips" class="tier-chips" role="radiogroup"><!-- Populated by CharacterSelectScreen.js --></div>
+        <div id="tier-hint" class="tier-hint"></div>
+      </div>
+      <div class="select-footer">
+        <div class="select-footer-wp">
+          <span class="wp-gem-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 3h12l4 6-10 13L2 9Z" />
+              <path d="M11 3 8 9l4 13 4-13-3-6" />
+              <path d="M2 9h20" />
+            </svg></span> <span id="select-wp-count">0</span> GP
+        </div>
+        <button id="btn-confirm-character" class="menu-btn btn-primary" disabled data-i18n="sel.start">Bắt đầu chiến!</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         BATTLE SCREEN
+    ═══════════════════════════════ -->
+    <div id="screen-battle" class="screen">
+      <canvas id="game-canvas"></canvas>
+      <!-- Lớp phủ ban đêm (chỉ hiện ở chế độ tối): 1 lớp màu phẳng, không blend → nhẹ GPU -->
+      <div id="night-veil" aria-hidden="true"></div>
+
+      <!-- Màn hình ngả đỏ/cam khi bạn thắng thế, xanh xám khi bị lép vế -->
+      <div id="tint-overlay" aria-hidden="true">
+        <div id="tint-warm"></div>
+        <div id="tint-cool"></div>
+      </div>
+
+      <!-- HUD -->
+      <div id="battle-ui">
+        <div id="gauge-wrapper">
+          <div id="gauge-track">
+            <div id="gauge-fill-player"></div>
+            <div id="gauge-indicator"><span id="gauge-pct">50%</span></div>
+          </div>
+          <div class="gauge-labels">
+            <span id="hud-player-name" class="gauge-label-player">← BẠN</span>
+            <span id="battle-ping" class="battle-ping hidden"></span>
+            <span id="hud-ai-name" class="gauge-label-ai">ĐỐI THỦ →</span>
+          </div>
+        </div>
+
+        <div id="battle-hud">
+          <div id="battle-timer" class="battle-timer">30</div>
+          <div id="battle-hint" class="battle-hint">
+            <span class="hint-main" data-i18n="b.hint">Sủa to và sủa nhiều để đẩy thanh sức mạnh về phía đối thủ</span>
+            <span class="hint-sub" data-i18n="b.hintSub">Bark loud and often to push the gauge</span>
+          </div>
+        </div>
+
+        <div id="bottom-hud">
+          <div id="mic-section" role="button" aria-label="Trạng thái micro — chạm để thử bật lại" data-i18n-attr="aria-label:b.micAria">
+            <div class="mic-icon-wrapper"><span id="mic-status-icon"><svg width="16" height="16" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                  <line x1="12" y1="19" x2="12" y2="22" />
+                </svg></span></div>
+            <div id="mic-bar-container">
+              <div id="mic-bar"></div>
+              <div id="mic-threshold-line"></div>
+            </div>
+            <div class="mic-labels">
+              <span>Vol</span>
+              <span id="mic-volume-text">0%</span>
+            </div>
+          </div>
+          <div id="combo-display" class="combo-display">
+            <div id="combo-count" class="combo-count">0</div>
+            <div class="combo-label">COMBO</div>
+          </div>
+          <div id="bark-total-display">
+            <div id="bark-total-count">0</div>
+            <div class="bark-total-label" data-i18n="b.barks">SỦA</div>
+          </div>
+        </div>
+
+        <button id="btn-tap-bark" class="tap-bark-btn" aria-label="Chạm để sủa" data-i18n-attr="aria-label:b.tapAria">
+          <div class="tap-bark-inner">
+            <span class="tap-bark-emoji" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+              </svg>
+            </span>
+            <span class="tap-bark-text" data-i18n="b.tap">SỦA!</span>
+          </div>
+        </button>
+      </div>
+
+      <div id="battle-toast" class="battle-toast hidden" role="status" aria-live="polite"></div>
+      <div id="effects-overlay" aria-hidden="true"></div>
+      <div id="screen-flash" aria-hidden="true"></div>
+
+      <!-- Đếm ngược: số vàng nhỏ giữa 2 chú chó → chữ đỏ "SỦA ĐI!" -->
+      <div id="countdown-overlay" class="countdown-overlay hidden" aria-live="polite">
+        <div id="countdown-number" class="countdown-number">3</div>
+      </div>
+
+      <div id="ko-overlay" class="ko-overlay hidden" aria-live="assertive">
+        <div id="ko-text" class="ko-text">ĐO VÁN!</div>
+      </div>
+
+      <button id="btn-exit-battle" class="btn-exit-battle" title="Thoát trận" data-i18n-attr="title:b.exit">✕</button>
+    </div>
+
+    <!-- ═══════════════════════════════
+         RESULT SCREEN
+    ═══════════════════════════════ -->
+    <div id="screen-result" class="screen">
+      <div id="result-snapshot" class="result-snapshot"></div>
+      <div id="result-tint" class="result-tint"></div>
+      <div id="result-verdict" class="result-verdict">ĐO VÁN!</div>
+
+      <div class="result-center">
+        <div class="result-panel">
+          <div id="result-win-lose" class="result-win-lose win-text">THẮNG ĐẸP!</div>
+          <div class="result-wp-amount">
+            <span class="wp-plus">+</span><span id="result-wp-number" class="result-wp-number">0</span><span
+              class="wp-unit">GP</span>
+          </div>
+          <div id="result-stats" class="result-stats">
+            <span><span data-i18n="res.barks">Sủa</span>: <b id="stat-bark-count">0</b></span>
+            <span><span data-i18n="res.combo">Combo</span>: <b id="stat-max-combo">0</b></span>
+            <span><span data-i18n="res.totalWp">Tổng GP</span>: <b id="stat-total-wp">0</b></span>
+          </div>
+          <div id="result-tier" class="result-tier hidden"></div>
+        </div>
+        <div class="result-actions">
+          <button id="btn-next-match" class="result-btn" data-i18n="res.next">Trận tiếp<small>Next match ▸</small></button>
+          <button id="btn-back-to-title" class="result-btn" data-i18n="res.menu">Menu chính<small>Main menu</small></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         ONLINE LOBBY SCREEN
+    ═══════════════════════════════ -->
+    <div id="screen-online" class="screen">
+      <button id="btn-back-from-online" class="btn-back" data-i18n="common.back">Quay lại</button>
+      <h2 class="screen-title online-title" data-i18n="on.title">Online 2 người</h2>
+      <p class="online-sub" data-i18n="on.sub">Buồn bực thì sủa lên! Xả stress cùng bạn bè – mỗi người một điện thoại 🐾</p>
+
+      <!-- Bước 1: tạo / vào phòng -->
+      <div id="online-start" class="online-box">
+        <div class="online-status-wrap">
+          <div id="server-status" class="server-status">
+            <span id="server-dot" class="server-dot"></span>
+            <span id="server-text" data-i18n="on.checking">Đang kiểm tra máy chủ ghép phòng…</span>
+            <button id="btn-recheck" class="server-recheck" data-i18n="on.recheck">Kiểm tra lại</button>
+          </div>
+          <div id="net-diag" class="net-diag hidden" aria-live="polite"></div>
+        </div>
+        <label class="privacy-row" for="online-hide-ip">
+          <input type="checkbox" id="online-hide-ip" class="setting-checkbox">
+          <span class="privacy-txt"><strong data-i18n="on.privacy">🔒 Chế độ riêng tư (giấu IP của bạn)</strong><small data-i18n="on.privacyHint">Bật: đối thủ không thấy IP của bạn, kết nối đi qua máy chủ trung gian (hơi trễ hơn). Tắt: nối thẳng, nhanh hơn nhưng đối thủ có thể thấy IP.</small></span>
+        </label>
+        <div class="online-card">
+          <h3><span class="oc-ico" aria-hidden="true">🏠</span> <span data-i18n="on.host.h">Tạo phòng</span></h3>
+          <p data-i18n="on.host.p">Bạn nhận một mã 5 ký tự, gửi cho bạn bè.</p>
+          <button id="btn-host" class="menu-btn btn-primary" data-i18n="on.host.btn">Tạo phòng</button>
+        </div>
+        <div class="online-or"><span data-i18n="on.or">hoặc</span></div>
+        <div class="online-card">
+          <h3><span class="oc-ico" aria-hidden="true">🚪</span> <span data-i18n="on.join.h">Vào phòng</span></h3>
+          <p data-i18n="on.join.p">Nhập mã bạn của bạn gửi.</p>
+          <input id="join-code" class="join-code" maxlength="200" placeholder="MÃ PHÒNG" data-i18n-attr="placeholder:on.join.ph" autocomplete="off"
+            autocapitalize="characters" spellcheck="false" inputmode="text" enterkeyhint="go">
+          <button id="btn-join" class="menu-btn btn-secondary" data-i18n="on.join.btn">Vào phòng</button>
+        </div>
+        <div class="online-tip">
+          <div class="tip-title" data-i18n="on.tip.t">💡 Mẹo kết nối</div>
+          <ul>
+            <li data-i18n="on.tip.1">Mở bằng <strong>Safari (iPhone)</strong> hoặc <strong>Chrome (Android/PC)</strong>, tránh trình duyệt nhúng của Zalo/Facebook.</li>
+            <li data-i18n="on.tip.2">Giữ màn hình sáng và <strong>không chuyển app</strong> trong lúc chờ đối thủ vào phòng.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bước 2: trong phòng -->
+      <div id="online-room" class="online-box online-room hidden">
+        <div id="room-code-wrap" class="room-code-wrap">
+          <div class="room-code-label" data-i18n="on.room.code">Mã phòng</div>
+          <div id="room-code" class="room-code">-----</div>
+          <button id="btn-copy-link" class="room-copy" data-i18n="on.room.copy">Sao chép liên kết mời</button>
+          <div class="room-hint" data-i18n="on.room.hint">⚠️ Giữ màn hình điện thoại luôn bật, không chuyển app trong khi chờ kết nối.</div>
+        </div>
+        <div id="room-status" class="room-status" data-i18n="on.room.wait0">Đang chờ đối thủ…</div>
+
+        <div class="room-players">
+          <div class="room-slot" id="slot-me">
+            <div class="slot-who" data-i18n="on.me">BẠN</div>
+            <div id="slot-me-char" class="slot-char">—</div>
+            <div id="slot-me-ready" class="slot-ready"></div>
+          </div>
+          <div class="room-vs">VS</div>
+          <div class="room-slot" id="slot-opp">
+            <div class="slot-who" data-i18n="on.opp">ĐỐI THỦ</div>
+            <div id="slot-opp-char" class="slot-char">—</div>
+            <div id="slot-opp-ready" class="slot-ready"></div>
+          </div>
+        </div>
+
+        <div class="room-pick-title" data-i18n="sel.title">Chọn chiến binh</div>
+        <div id="room-chars" class="room-chars"></div>
+        <button id="btn-ready" class="menu-btn btn-primary" disabled data-i18n="on.ready">Sẵn sàng!</button>
+        <div id="room-ping" class="room-ping"></div>
+      </div>
+
+      <div id="online-msg" class="online-msg"></div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         ONBOARDING: chuẩn hoá mic → cách chơi → vào game (bỏ qua được)
+         Chỉ bước 1 mới dùng mic; xong là tắt ngay.
+    ═══════════════════════════════ -->
+    <div id="screen-onboarding" class="screen">
+      <button id="ob-skip-all" class="ob-skip" data-i18n="ob.skip">Bỏ qua ›</button>
+
+      <div class="ob-wrap">
+        <ol class="ob-steps" aria-label="Các bước">
+          <li data-s="1"><b>1</b><span data-i18n="ob.s1">Mic</span></li>
+          <li data-s="2"><b>2</b><span data-i18n="ob.s2">Cách chơi</span></li>
+          <li data-s="3"><b>3</b><span data-i18n="ob.s3">Vào game</span></li>
+        </ol>
+
+        <!-- BƯỚC 1: chuẩn hoá mic -->
+        <section id="ob-step-1" class="ob-panel">
+          <h2 class="ob-title" data-i18n="ob.t1">Chuẩn hoá mic</h2>
+          <p class="ob-sub" data-i18n="ob.sub1">Sủa thử 3 tiếng để game hiểu "to" của bạn là bao nhiêu — chơi online mới công bằng.</p>
+
+          <div class="ob-stage" id="ob-stage">
+            <div class="ob-pulse" id="ob-pulse"></div>
+            <div class="ob-core"><span id="ob-core-ico">🎤</span></div>
+          </div>
+
+          <div class="ob-paws" id="ob-paws" aria-live="polite"><span>🐾</span><span>🐾</span><span>🐾</span></div>
+          <div id="ob-phase" class="ob-phase" data-i18n="ob.ready">Sẵn sàng?</div>
+          <div id="ob-mic-msg" class="ob-msg" aria-live="polite"></div>
+
+          <div class="ob-actions">
+            <button id="ob-mic-start" class="menu-btn btn-primary" data-i18n="ob.start">🎤 Bắt đầu</button>
+            <button id="ob-next-1" class="ob-link" data-i18n="ob.skipStep">Bỏ qua bước này</button>
+          </div>
+          <p class="ob-note" data-i18n="ob.note">🔒 Chỉ bước này dùng mic — đo xong là tắt ngay.</p>
+        </section>
+
+        <!-- BƯỚC 2: hướng dẫn (không dùng mic) -->
+        <section id="ob-step-2" class="ob-panel">
+          <h2 class="ob-title" data-i18n="ob.t2">Cách chơi</h2>
+          <div id="ob-slides" class="ob-slides">
+            <article class="ob-slide on">
+              <div class="ob-art art-volume" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><em data-i18n="ob.slide1.art">GÂU!</em>
+              </div>
+              <h3 data-i18n="ob.slide1.h">Sủa càng to, lực càng mạnh</h3>
+              <p data-i18n="ob.slide1.p">Sủa thật to vào mic: tiếng to đẩy thanh lực mạnh hơn hẳn tiếng nhỏ.</p>
+            </article>
+            <article class="ob-slide">
+              <div class="ob-art art-combo" aria-hidden="true">
+                <span>×1.0</span><span>×1.2</span><span>×1.4</span><span>×1.6</span><span>×2.0</span>
+              </div>
+              <h3 data-i18n="ob.slide2.h">Sủa liên tục để lên COMBO</h3>
+              <p data-i18n="ob.slide2.p">Sủa liền nhau, nghỉ không quá ~2 giây thì combo tăng, lực nhân lên (tối đa ×2). Chó sủa đúng từng tiếng của bạn.</p>
+            </article>
+            <article class="ob-slide">
+              <div class="ob-art art-tug" aria-hidden="true">
+                <b>🐕</b><div class="tug-bar"><u></u></div><b>🐶</b>
+              </div>
+              <h3 data-i18n="ob.slide3.h">Thanh kéo co</h3>
+              <p data-i18n="ob.slide3.p">Đẩy thanh về phía đối thủ — đẩy hết là đo ván! Hết 30 giây thì ai đang dẫn sẽ thắng.</p>
+            </article>
+            <article class="ob-slide">
+              <div class="ob-art art-stats" aria-hidden="true">
+                <span data-i18n="ob.stat1">💪 Sức mạnh</span><span data-i18n="ob.stat2">⚡ Tốc độ</span><span data-i18n="ob.stat3">🔥 Combo</span>
+              </div>
+              <h3 data-i18n="ob.slide4.h">Giọng bạn mới là chính</h3>
+              <p data-i18n="ob.slide4.p">Chỉ số của chó chỉ hỗ trợ nhẹ (vài %). Không có mic? Dùng nút <b>SỦA!</b> trên màn hình.</p>
+            </article>
+          </div>
+          <div id="ob-dots2" class="ob-dots2" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+          <div class="ob-actions">
+            <button id="ob-next-2" class="menu-btn btn-primary" data-i18n="ob.next">Tiếp</button>
+            <button id="ob-skip-2" class="ob-link" data-i18n="ob.skipTut">Bỏ qua hướng dẫn</button>
+          </div>
+        </section>
+
+        <!-- BƯỚC 3: sẵn sàng -->
+        <section id="ob-step-3" class="ob-panel ob-ready">
+          <div class="ob-trophy" aria-hidden="true">🏆</div>
+          <h2 class="ob-title" data-i18n="ob.t3">Sẵn sàng!</h2>
+          <div id="ob-summary" class="ob-summary"></div>
+          <div class="ob-actions">
+            <button id="ob-finish" class="menu-btn btn-primary" data-i18n="ob.play">VÀO GAME</button>
+            <button id="ob-redo" class="ob-link" data-i18n="ob.redo">🎤 Chuẩn hoá mic lại</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         RANKINGS SCREEN
+    ═══════════════════════════════ -->
+    <div id="screen-rankings" class="screen">
+      <button id="btn-back-from-rankings" class="btn-back" data-i18n="common.back">Quay lại</button>
+      <h2 class="screen-title" data-i18n="rank.title">Bảng xếp hạng</h2>
+      <div id="rankings-content" class="rankings-content">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         SETTINGS SCREEN
+    ═══════════════════════════════ -->
+    <div id="screen-settings" class="screen">
+      <button id="btn-back-from-settings" class="btn-back" data-i18n="common.back">Quay lại</button>
+      <h2 class="screen-title" data-i18n="common.settings">Cài đặt</h2>
+      <div class="settings-content">
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.mic">Micro</h3>
+          <div class="setting-item">
+            <label for="setting-threshold" data-i18n="set.threshold">Ngưỡng phát hiện sủa</label>
+            <div class="setting-control">
+              <input type="range" id="setting-threshold" min="1" max="10" value="5">
+              <span id="setting-threshold-val" class="setting-val">5</span>
+            </div>
+            <div class="setting-hint" data-i18n="set.thresholdHint">Tăng nếu bị kích hoạt nhầm, giảm nếu mic không nhạy</div>
+          </div>
+        </div>
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.micTest">Kiểm tra micro</h3>
+          <div class="setting-item">
+            <button id="btn-mic-test" class="menu-btn btn-secondary" data-i18n="set.micTestBtn">🎤 Kiểm tra mic</button>
+            <div id="mic-test-msg" class="mic-test-msg" aria-live="polite"></div>
+            <div id="mic-test-panel" class="mic-test-panel hidden">
+              <div class="mic-test-meter">
+                <div id="mic-test-bar" class="mic-test-bar"></div>
+                <div id="mic-test-thr" class="mic-test-thr" title="Ngưỡng tính là sủa" data-i18n-attr="title:set.thrTitle"></div>
+              </div>
+              <div class="mic-test-row">
+                <span id="mic-test-pct">0%</span>
+                <span><span data-i18n="set.barksGot">Tiếng sủa nhận được:</span> <strong id="mic-test-barks">0</strong></span>
+              </div>
+              <div id="mic-test-info" class="setting-hint"></div>
+              <button id="btn-mic-apply" class="menu-btn btn-primary hidden" data-i18n="set.apply">Dùng mức gợi ý</button>
+            </div>
+            <button id="btn-redo-onboarding" class="menu-btn btn-secondary" data-i18n="set.redo">🎓 Chuẩn hoá mic &amp; xem hướng dẫn</button>
+            <div class="setting-hint" data-i18n="set.micHint">Vạch trắng trên thanh là ngưỡng đang chọn: thanh chuyển cam khi vượt ngưỡng = được tính là 1 tiếng sủa. Kéo thanh "Ngưỡng" phía trên để thấy thay đổi ngay.</div>
+          </div>
+        </div>
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.sound">Âm thanh</h3>
+          <div class="setting-item">
+            <label for="setting-sfx-vol" data-i18n="set.sfx">Âm lượng hiệu ứng</label>
+            <div class="setting-control">
+              <input type="range" id="setting-sfx-vol" min="0" max="10" value="7">
+              <span id="setting-sfx-vol-val" class="setting-val">7</span>
+            </div>
+          </div>
+          <div class="setting-item">
+            <label for="setting-music-vol" data-i18n="set.music">Âm lượng nhạc nền</label>
+            <div class="setting-control">
+              <input type="range" id="setting-music-vol" min="0" max="10" value="6">
+              <span id="setting-music-vol-val" class="setting-val">6</span>
+            </div>
+            <div class="setting-hint" data-i18n="set.musicHint">Nhạc trong trận tự nhỏ hơn menu. Nếu mic bị kích hoạt nhầm khi nhạc to, hãy giảm nhạc hoặc dùng tai nghe.</div>
+          </div>
+          <div class="setting-item">
+            <label for="setting-mute" data-i18n="set.mute">Tắt tiếng</label>
+            <input type="checkbox" id="setting-mute" class="setting-checkbox">
+          </div>
+        </div>
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.privacy">Riêng tư</h3>
+          <div class="setting-item">
+            <label for="setting-hide-ip" data-i18n="set.hideIp">Giấu IP khi chơi online</label>
+            <input type="checkbox" id="setting-hide-ip" class="setting-checkbox">
+            <div class="setting-hint" data-i18n="set.hideIpHint">Bật: đối thủ không thấy IP của bạn (dữ liệu đi qua máy chủ trung gian TURN, trễ hơn một chút). Tắt: kết nối thẳng, nhanh hơn nhưng đối thủ có thể thấy IP. Chỉ áp dụng từ lần vào phòng kế tiếp.</div>
+          </div>
+        </div>
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.perf">Hiệu năng</h3>
+          <div class="setting-item">
+            <label for="setting-perf" data-i18n="set.gfx">Chất lượng đồ hoạ</label>
+            <select id="setting-perf" class="setting-select">
+              <option value="auto" data-i18n="set.perfAuto">Tự động (khuyên dùng)</option>
+              <option value="lite" data-i18n="set.perfLite">Tiết kiệm — máy yếu / đỡ nóng máy</option>
+              <option value="high" data-i18n="set.perfHigh">Đẹp nhất</option>
+            </select>
+            <div class="setting-hint" data-i18n="set.perfHint">Tiết kiệm: 30fps, bỏ kính mờ &amp; hiệu ứng lặp, ít chữ bay hơn. Tự động sẽ tự chuyển sang Tiết kiệm nếu máy chạy dưới ~38fps.</div>
+          </div>
+        </div>
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.credits">Ghi công</h3>
+          <p class="setting-hint credits" data-i18n="set.creditsText">
+            Nhạc nền: “A Pirates Adventures” — Emmraan, trên
+            <a href="https://pixabay.com/vi/music/cu%E1%BB%99c-phi%C3%AAu-l%C6%B0u-a-pirates-adventures-254111/" target="_blank" rel="noopener noreferrer">Pixabay</a>
+            (đã cắt vòng lặp và chỉnh tốc độ cho game).<br>
+            Tiếng chó sủa: Download hiệu ứng âm thanh miễn phí tại
+            <a href="https://tiengdong.com/tieng-cho-sua" target="_blank" rel="noopener noreferrer">TiengDong.com</a> (Tiếng Động chấm Com).<br>
+            Nhạc thắng / thua, tiếng bíp đếm ngược dự phòng: tự tạo bằng Web Audio API ngay trong game (không dùng file âm thanh bên ngoài).
+          </p>
+        </div>
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.danger">Khu vực nguy hiểm</h3>
+          <button id="btn-reset-data" class="menu-btn btn-danger" data-i18n="common.reset">Xoá toàn bộ dữ liệu</button>
+        </div>
+        <div class="settings-group">
+          <h3 class="settings-group-title" data-i18n="set.about">Giới thiệu</h3>
+          <div class="about-text">
+            <p data-i18n="set.about1">Gaune – Gâu Gâu v1.7 🐾 — buồn bực thì sủa lên, xả stress cùng mình!</p>
+            <p data-i18n="set.about2">Sử dụng Web Audio API để phát hiện tiếng sủa qua mic.</p>
+            <p data-i18n="set.about3">Mỗi lần sủa = volume × hệ số + bonus combo.</p>
+            <p class="about-legal"><a href="privacy.html" target="_blank" rel="noopener">Quyền riêng tư</a> · <a href="terms.html" target="_blank" rel="noopener">Điều khoản</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- #app -->
+
+  <script src="js/vendor/peerjs.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

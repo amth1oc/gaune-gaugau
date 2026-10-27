@@ -1,0 +1,162 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ui-polish.css — Sunset Glass Arena Micro-Interactions & Transitions
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Subtle Floating Paw & Sparkle Decorations ── */
+.menu-bg-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-paw {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.10;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  animation: driftPaw 12s ease-in-out infinite;
+  user-select: none;
+}
+
+.bg-paw-1 { top: 8%;  left: 6%;   animation-delay: 0s; }
+.bg-paw-2 { top: 62%; right: 5%;  animation-delay: -4s; font-size: 2.6rem; }
+.bg-paw-3 { bottom: 12%; left: 16%; animation-delay: -7s; font-size: 1.6rem; }
+.bg-paw-4 { top: 25%; right: 16%; animation-delay: -2s; font-size: 2.2rem; }
+
+@keyframes driftPaw {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-12px) rotate(6deg); }
+}
+
+/* ── Translucent Glass Shimmer on Cards ── */
+.menu-banner-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.16) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.menu-banner-card:hover::before {
+  animation: cardShimmer 0.75s ease-out;
+}
+
+@keyframes cardShimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ── WP Counter Bump Animation (Sunset Gold) ── */
+.wp-bump {
+  animation: wpBumpAnim 0.3s ease-out;
+}
+
+@keyframes wpBumpAnim {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); color: #F8C66A; }
+  100% { transform: scale(1); }
+}
+
+/* ── Combo Burst Effect in Battle ── */
+#combo-display.combo-active {
+  background: linear-gradient(135deg, rgba(248, 198, 106, 0.75), rgba(232, 117, 57, 0.85));
+  border-color: #F8C66A;
+  box-shadow: 0 8px 24px rgba(232, 117, 57, 0.45), 0 0 16px rgba(248, 198, 106, 0.35);
+  animation: comboPop 0.22s ease-out;
+}
+
+#combo-display.combo-active .combo-count {
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+@keyframes comboPop {
+  0%   { transform: scale(0.95); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* ── Mic Detecting Sound Pulse ── */
+#mic-section.mic-detecting {
+  border-color: #F8C66A;
+  box-shadow: 0 4px 16px rgba(248, 198, 106, 0.35);
+}
+
+#mic-status-icon svg {
+  display: block;
+  stroke: #F8C66A;
+}
+
+#mic-section.mic-off {
+  border-color: #E87539;
+}
+
+#mic-section.mic-off #mic-status-icon svg {
+  stroke: #E87539;
+}
+
+/* Ghi công */
+.credits{line-height:1.6;user-select:text;-webkit-user-select:text}
+.credits a{color:#ffd75a;text-decoration:underline;text-underline-offset:2px}
+
+/* ═══ Tinh chỉnh hiện đại – tối giản (nhẹ GPU: chỉ opacity/transform, chạy 1 lần) ═══ */
+
+/* Thẻ menu hiện lần lượt từ dưới lên mỗi khi vào màn hình menu */
+.screen.active .menu-banner-card { animation: cardIn .5s cubic-bezier(.2, .8, .2, 1) backwards; }
+.screen.active .menu-banner-card:nth-of-type(2) { animation-delay: .07s; }
+.screen.active .menu-banner-card:nth-of-type(3) { animation-delay: .14s; }
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Máy có chuột: nút/thẻ nhích nhẹ khi rê vào (điện thoại không bị dính trạng thái hover) */
+@media (hover: hover) and (pointer: fine) {
+  .menu-banner-card, .char-card:not(.locked), .menu-icon-btn, .stage-chip:not(.locked) {
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  }
+  .menu-banner-card:hover, .char-card:not(.locked):hover { transform: translateY(-3px); filter: brightness(1.06); }
+  .menu-icon-btn:hover, .stage-chip:not(.locked):hover { transform: translateY(-2px); filter: brightness(1.1); }
+}
+
+/* Viền focus rõ ràng khi dùng bàn phím (không hiện khi chạm/bấm chuột) */
+:where(button, a, input, select, [role="button"]):focus-visible {
+  outline: 3px solid #ffd75a;
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+/* Người dùng bật "giảm chuyển động" trong hệ điều hành: tắt hoạt ảnh lặp, rút ngắn chuyển cảnh */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Nhắc bật lại nhạc khi quay lại từ app khác (iOS đòi một cú chạm) */
+.audio-hint {
+  position: fixed; left: 50%; bottom: calc(18px + var(--safe-b, 0px)); z-index: 99990;
+  transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
+  padding: 10px 18px; border-radius: 9999px; white-space: nowrap;
+  font: 800 0.92rem var(--font-ui, system-ui, sans-serif); color: var(--c-warm-white, #F5F0E9);
+  background: rgba(var(--rgb-deep), 0.9); border: 1px solid rgba(248, 198, 106, 0.6);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.audio-hint.show { opacity: 1; transform: translate(-50%, 0); }

@@ -1,0 +1,172 @@
+/* ═══════════════════════════════════════════════════════════════════
+   modes.css — Giao diện SÁNG (hoàng hôn) / TỐI (ban đêm) + đồng bộ các màn hình + nút Ngôn ngữ / Sáng-Tối
+   Nạp sau mọi file giao diện, trước lite.css. Màu đổi qua biến (--rgb-*, --c-*, --glass-*) → không tốn thêm JS/GPU.
+   <html data-theme="day|night" data-lang="vi|en" data-screen="tên-màn-hình">
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root { --head-top: calc(64px + var(--safe-t)); }
+@media (max-width: 680px) { :root { --head-top: calc(56px + var(--safe-t)); } }
+
+/* ── 1. NỀN CHUNG (1 lớp cố định cho menu / chọn nhân vật / online / cài đặt / xếp hạng / hướng dẫn) ──
+   Sáng = hoàng hôn; Tối = sân sau ban đêm (ảnh chỉ tải khi bật chế độ tối lần đầu). Chuyển bằng mờ dần (chỉ opacity). */
+#app-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: var(--c-espresso-deep); }
+#app-bg::before, #app-bg::after { content: ''; position: absolute; inset: 0; }
+#app-bg::before {
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 25%, rgba(248, 198, 106, 0.12) 0%, rgba(var(--rgb-brown), 0.48) 55%, rgba(var(--rgb-deep), 0.90) 100%),
+    url('../assets/backgrounds/Sunset Cafe Plaza in a Storybook Town.webp') center 35% / cover no-repeat;
+}
+#app-bg::after {
+  opacity: 0; transition: opacity 0.45s ease;
+  background: radial-gradient(ellipse 90% 60% at 50% 30%, rgba(70, 110, 230, 0.10) 0%, rgba(var(--rgb-brown), 0.34) 55%, rgba(var(--rgb-deep), 0.80) 100%);
+}
+html[data-night-loaded] #app-bg::after {
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 30%, rgba(70, 110, 230, 0.10) 0%, rgba(var(--rgb-brown), 0.34) 55%, rgba(var(--rgb-deep), 0.80) 100%),
+    url('../assets/theme/night-backyard.webp') center 58% / cover no-repeat;
+}
+@media (max-width: 700px) {
+  html[data-night-loaded] #app-bg::after {
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 30%, rgba(70, 110, 230, 0.10) 0%, rgba(var(--rgb-brown), 0.34) 55%, rgba(var(--rgb-deep), 0.80) 100%),
+      url('../assets/theme/night-backyard-sm.webp') center 58% / cover no-repeat;
+  }
+}
+html[data-theme="night"] #app-bg::after { opacity: 1; }
+
+/* Màn hình trận đấu + kết quả có nền riêng → không cần nền chung */
+html[data-screen="battle"] #app-bg, html[data-screen="result"] #app-bg { visibility: hidden; }
+
+/* Lớp phủ ban đêm trên cảnh trận (chỉ ở chế độ tối): 1 lớp màu phẳng + tối góc, KHÔNG blend → nhẹ GPU.
+   Chỉ là hiệu ứng hiển thị của riêng máy bạn — không ảnh hưởng gì tới dữ liệu đồng bộ online. */
+#night-veil {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
+  background: radial-gradient(ellipse at 50% 45%, rgba(18, 30, 110, 0.22) 0%, rgba(6, 12, 55, 0.52) 100%);
+}
+html[data-theme="night"] #night-veil { opacity: 1; }
+
+/* ── 2. NÚT NGÔN NGỮ + SÁNG/TỐI ──
+   Dùng lại kiểu .menu-icon-btn (tròn, kính mờ) để cùng phong cách với nút Cúp / Cài đặt.
+   Menu: nằm trong thanh trên cùng với Cúp + Cài đặt. Màn phụ: cụm cố định góc trên phải (đối xứng với nút Quay lại bên trái). */
+.quick-toggles {
+  position: absolute; z-index: 30;
+  top: calc(10px + var(--safe-t)); right: calc(12px + var(--safe-r));
+  display: flex; align-items: center; gap: 8px;
+}
+html[data-screen="menu"] .quick-toggles,
+html[data-screen="battle"] .quick-toggles,
+html[data-screen="result"] .quick-toggles { display: none; }
+.quick-toggles .menu-icon-btn { width: 40px; height: 40px; }
+.tg-btn { padding: 0; }
+.tg-code { font: 800 0.82rem/1 var(--font-display); letter-spacing: 0.5px; }
+.tg-btn svg { width: 20px; height: 20px; }
+.tg-sun { display: none; }
+html[data-theme="night"] .tg-moon { display: none; }
+html[data-theme="night"] .tg-sun { display: block; }
+.menu-top-actions { gap: 8px; }
+@media (min-width: 681px) { .menu-top-actions { gap: 10px; } }
+
+/* Màn hướng dẫn: nút "Bỏ qua" chuyển sang góc trái (góc phải dành cho cụm nút Ngôn ngữ / Sáng-Tối) */
+.ob-skip { right: auto !important; left: calc(14px + var(--safe-l, 0px)); top: calc(10px + var(--safe-t)) !important; }
+#screen-onboarding { padding-top: var(--head-top) !important; }
+
+/* ── 3. NÚT: cùng một kiểu viên thuốc cho toàn game (Online / Cài đặt / Chọn nhân vật / Kết quả) ── */
+.menu-btn { border-radius: var(--r-full); font-weight: 800; letter-spacing: 0.5px; min-height: 48px; }
+.btn-primary, #btn-confirm-character, #btn-next-match:not(:disabled) {
+  background: linear-gradient(135deg, var(--c-sunset-gold) 0%, var(--c-terracotta) 100%);
+  color: #2b1204; text-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(232, 117, 57, 0.45), var(--glass-highlight);
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px); filter: brightness(1.06);
+  box-shadow: 0 8px 28px rgba(232, 117, 57, 0.55), 0 0 20px rgba(248, 198, 106, 0.4), var(--glass-highlight);
+}
+.btn-primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 3px 10px rgba(232, 117, 57, 0.35); }
+.btn-primary:disabled {
+  background: rgba(var(--rgb-brown), 0.55); color: rgba(245, 240, 233, 0.45);
+  border-color: rgba(245, 240, 233, 0.15); box-shadow: none;
+}
+.btn-secondary {
+  background: rgba(var(--rgb-brown), 0.65); color: var(--c-warm-white);
+  border: 1px solid var(--glass-border-light);
+  box-shadow: var(--glass-shadow-sm), var(--glass-highlight);
+}
+.btn-secondary:hover { background: rgba(var(--rgb-brown-hi), 0.75); border-color: var(--c-sunset-gold); }
+.btn-danger { box-shadow: 0 4px 12px rgba(194, 45, 45, 0.4), var(--glass-highlight); }
+
+/* ── 4. THÔNG BÁO NỔI (thay cho style nội tuyến + keyframe `fadeUp` bị thiếu trước đây) ── */
+.toast-msg, .assets-toast {
+  position: fixed; left: 50%; bottom: calc(88px + var(--safe-b)); transform: translateX(-50%);
+  z-index: 999; pointer-events: none;
+  max-width: min(92vw, 420px); padding: 10px 18px; border-radius: 16px; text-align: center;
+  font: 700 0.9rem/1.35 var(--font-ui); color: var(--c-warm-white);
+  background: rgba(var(--rgb-deep), 0.92); border: 1px solid var(--glass-border-gold);
+  box-shadow: var(--glass-shadow-sm);
+  animation: toastIn 0.25s ease both;
+}
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+/* ── 5. NGÔN NGỮ ── */
+html[data-lang="en"] .hint-sub { display: none; }              /* dòng phụ tiếng Anh dư thừa khi đã ở tiếng Anh */
+.result-btn small:empty { display: none; }
+html[data-lang="en"] .logo-badge-top, html[data-lang="en"] .logo-sub { letter-spacing: 0.6px; }
+.screen-title, .online-sub { overflow-wrap: anywhere; }
+
+/* ── 6. CHẾ ĐỘ TỐI (ban đêm): đổi bảng màu nâu ấm → xanh đêm, giữ vàng/cam làm điểm nhấn như ánh đèn lồng ── */
+html[data-theme="night"] {
+  --rgb-deep: 6, 12, 40;
+  --rgb-brown: 17, 29, 78;
+  --rgb-brown-hi: 31, 50, 112;
+  --rgb-cream: 188, 214, 255;
+
+  --c-espresso: #16235a;
+  --c-espresso-deep: #070d2b;
+  --c-bg: #070d2b;
+  --c-bg-2: #16235a;
+  --c-bg-card: rgba(17, 29, 78, 0.66);
+  --c-cream-glass: #d9e6ff;
+  --c-warm-white: #eef3ff;
+  --c-text: #eef3ff;
+  --c-text-2: rgba(238, 243, 255, 0.9);
+  --c-text-3: rgba(222, 232, 255, 0.68);
+  --c-border: rgba(188, 214, 255, 0.24);
+
+  --glass-brown: rgba(17, 29, 78, 0.62);
+  --glass-brown-deep: rgba(6, 12, 40, 0.84);
+  --glass-brown-solid: #101a47;
+  --glass-cream: rgba(188, 214, 255, 0.12);
+  --glass-cream-hover: rgba(188, 214, 255, 0.20);
+  --glass-cream-selected: rgba(188, 214, 255, 0.28);
+  --glass-border: rgba(188, 214, 255, 0.22);
+  --glass-border-light: rgba(188, 214, 255, 0.36);
+  --glass-border-gold: rgba(255, 205, 120, 0.62);
+  --glass-shadow: 0 12px 32px rgba(2, 5, 25, 0.5), 0 2px 6px rgba(2, 5, 25, 0.3);
+  --glass-shadow-sm: 0 6px 16px rgba(2, 5, 25, 0.38);
+  --glass-shadow-lg: 0 18px 42px rgba(2, 5, 25, 0.6);
+  --gold-glow: 0 0 24px rgba(255, 205, 120, 0.42);
+}
+/* Thẻ banner menu: lớp phủ nâu → xanh đêm */
+html[data-theme="night"] .card-play .banner-card-bg {
+  background: linear-gradient(90deg, rgba(8, 16, 56, 0.84) 0%, rgba(8, 16, 56, 0.50) 58%, rgba(4, 8, 30, 0.15) 100%),
+    url('../assets/backgrounds/Golden Hour in a Vietnamese Village.webp') center 40% / cover no-repeat;
+}
+html[data-theme="night"] .card-online .banner-card-bg {
+  background: linear-gradient(90deg, rgba(8, 14, 52, 0.86) 0%, rgba(8, 14, 52, 0.52) 58%, rgba(4, 8, 30, 0.15) 100%),
+    url('../assets/backgrounds/Golden Valley by the Water.webp') center center / cover no-repeat;
+}
+html[data-theme="night"] .card-characters .banner-card-bg {
+  background: linear-gradient(90deg, rgba(10, 16, 54, 0.86) 0%, rgba(10, 16, 54, 0.52) 58%, rgba(4, 8, 30, 0.15) 100%),
+    url('../assets/backgrounds/Sunset Promenade in Vietnam.webp') center 30% / cover no-repeat;
+}
+html[data-theme="night"] .boot { background: radial-gradient(circle at center, #16235a 0%, #050a22 100%); }
+html[data-theme="night"] #screen-result { background: #0b1438; }
+html[data-theme="night"] .btn-back,
+html[data-theme="night"] .btn-exit-battle { background: rgba(var(--rgb-deep), 0.88) !important; }
+html[data-theme="night"] .select-footer { background: rgba(var(--rgb-deep), 0.88) !important; }
+html[data-theme="night"] .menu-hero { filter: drop-shadow(0 16px 24px rgba(2, 5, 25, 0.6)); }
+html[data-theme="night"] .tap-bark-inner { box-shadow: 0 10px 28px rgba(232, 117, 57, 0.5), 0 0 20px rgba(255, 205, 120, 0.3), var(--glass-highlight); }
+html[data-theme="night"] .audio-hint { background: rgba(var(--rgb-deep), 0.92); border-color: rgba(255, 205, 120, 0.6); }
+html[data-theme="night"] ::-webkit-scrollbar-thumb { background: #3a5cc0; }
+html[data-theme="night"] ::-webkit-scrollbar-track { background: var(--c-bg); }
+html[data-theme="night"] .setting-select { color-scheme: dark; }

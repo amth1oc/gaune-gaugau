@@ -1,0 +1,341 @@
+/* ═══════════════════════════════════════════
+   battle.css — Battle screen UI overlay styles
+   ═══════════════════════════════════════════ */
+
+#screen-battle {
+  background: #000;
+  padding: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+/* ── Canvas ── */
+#game-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+/* ── UI Overlay ── */
+#battle-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Màn hình ngả màu theo thế trận ── */
+#tint-overlay { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+#tint-warm, #tint-cool { position: absolute; inset: 0; opacity: 0; mix-blend-mode: multiply; will-change: opacity; }
+#tint-warm { background: radial-gradient(ellipse at 50% 55%, #f39a5c 0%, #dc5d30 50%, #7c1612 100%); }
+#tint-cool { background: radial-gradient(ellipse at 50% 50%, #aebbd6 0%, #8497bd 60%, #4a5a80 100%); }
+
+/* ── Top: gauge + đồng hồ + dòng hướng dẫn (giống video) ── */
+#battle-hud {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 2px 12px 0; margin-top: -2px;
+}
+.battle-timer {
+  font-family: 'Baloo 2', 'Be Vietnam Pro', sans-serif;
+  font-size: 2.7rem; line-height: 1; letter-spacing: 1px;
+  color: #fffaf0;
+  text-shadow: 0 2px 6px rgba(40,20,0,0.55), 0 0 2px rgba(0,0,0,0.6);
+  min-width: 3ch; text-align: center;
+  transition: color 0.3s;
+}
+.battle-timer.timer-warning { color: #ff5a3c; animation: timerPulse 0.8s ease-in-out infinite; }
+@keyframes timerPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+.battle-hint { display: flex; flex-direction: column; align-items: center; gap: 1px; text-align: center; }
+.hint-main {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.86rem; font-weight: 700; letter-spacing: 0.2px; color: #ffe08a;
+  text-shadow: 0 1px 3px rgba(40,20,0,0.8);
+}
+.hint-sub { font-size: 0.6rem; font-weight: 700; color: rgba(255,236,180,0.75); text-shadow: 0 1px 2px rgba(0,0,0,0.7); }
+
+/* ── Bottom HUD ── */
+#bottom-hud {
+  position: absolute;
+  bottom: calc(90px + var(--safe-b));
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 calc(16px + var(--safe-r)) 0 calc(16px + var(--safe-l));
+  pointer-events: none;
+  gap: 12px;
+}
+
+/* Mic section */
+#mic-section {
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-md);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 150px;
+  pointer-events: all;      /* chạm để thử bật lại mic */
+  cursor: pointer;
+}
+#mic-section.mic-off { border-color: rgba(231,76,60,0.6); }
+#mic-section.mic-off #mic-volume-text { color: var(--c-danger) !important; }
+
+.mic-icon-wrapper {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+#mic-bar-container {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--r-full);
+  overflow: hidden;
+  position: relative;
+}
+
+#mic-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--r-full);
+  background: linear-gradient(90deg, #2ecc71, #f5a623);
+  transition: width 0.04s linear;
+}
+
+#mic-threshold-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: rgba(255,255,255,0.35);
+  left: 25%; /* dynamic via JS */
+}
+
+.mic-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+.mic-labels span {
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.4);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+#mic-volume-text {
+  color: var(--c-primary) !important;
+  font-family: var(--font-display);
+  font-size: 0.75rem !important;
+}
+
+/* Combo display */
+#combo-display {
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-md);
+  padding: 8px 14px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.combo-count {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: var(--c-primary);
+  line-height: 1;
+  transition: transform 0.15s var(--t-slow);
+}
+
+.combo-label {
+  font-size: 0.55rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+#combo-display.combo-active {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 20px var(--c-primary-glow);
+}
+#combo-display.combo-active .combo-count {
+  color: var(--c-primary);
+  transform: scale(1.15);
+}
+
+/* Bark total */
+#bark-total-display {
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-md);
+  padding: 8px 14px;
+  text-align: center;
+}
+#bark-total-count {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: #FFF;
+  line-height: 1;
+}
+.bark-total-label {
+  font-size: 0.55rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+/* ── Tap to Bark ── */
+.tap-bark-btn {
+  position: absolute;
+  bottom: calc(14px + var(--safe-b));
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, #F5A623, #C07010);
+  border: none;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  pointer-events: all;
+  z-index: 10;
+  padding: 12px 28px;
+  box-shadow: 0 4px 0 #7A4000, 0 6px 25px rgba(245,166,35,0.4);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tap-bark-btn:active {
+  transform: translateX(-50%) scale(0.93) translateY(3px);
+  box-shadow: 0 1px 0 #7A4000, 0 3px 15px rgba(245,166,35,0.3);
+}
+
+.tap-bark-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tap-bark-emoji { font-size: 1.4rem; }
+.tap-bark-text {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  color: #1A0800;
+}
+
+/* ── Flash overlay ── */
+#screen-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 15;
+  transition: opacity 0.25s ease;
+}
+
+/* ── Đếm ngược: số vàng nhỏ giữa 2 chú chó → chữ đỏ SỦA ĐI! ── */
+.countdown-overlay {
+  position: absolute; inset: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.countdown-number {
+  font-family: 'Baloo 2', 'Be Vietnam Pro', sans-serif;
+  font-size: clamp(2.2rem, 9vh, 4.4rem);
+  color: #ffd21f;
+  text-shadow: 0 3px 0 #7a4a00, 0 0 18px rgba(255,210,31,0.45);
+  margin-top: 24vh;                       /* đặt số ở khoảng giữa 2 chú chó */
+  animation: countdownPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  line-height: 1;
+}
+.countdown-number.go-text {
+  font-family: 'Lobster', 'Baloo 2', cursive; font-weight: 400;
+  font-size: min(8rem, 22vh, 19vw); white-space: nowrap;
+  color: #e0291f; margin-top: 0; transform: rotate(-6deg);
+  text-shadow: 3px 3px 0 rgba(30,0,0,0.4), 0 0 26px rgba(255,60,30,0.55);
+  -webkit-text-stroke: 2px #3a0a08;
+  animation: goSlam 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+.countdown-number.go-text::after {
+  content: 'BARK!'; display: block; text-align: center; transform: rotate(6deg);
+  font-family: 'Be Vietnam Pro', sans-serif; font-weight: 900; letter-spacing: 6px;
+  font-size: 0.14em; color: #fff3d6; -webkit-text-stroke: 0; text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+@keyframes countdownPop { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes goSlam { from { transform: rotate(-6deg) scale(2.4); opacity: 0; } to { transform: rotate(-6deg) scale(1); opacity: 1; } }
+
+/* ── KO overlay ── */
+.ko-overlay { position: absolute; inset: 0; z-index: 22; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.ko-text {
+  font-family: 'Baloo 2', 'Be Vietnam Pro', sans-serif;
+  font-size: clamp(5rem, 20vw, 12rem); letter-spacing: 4px;
+  color: #d4161c; -webkit-text-stroke: 3px #3a0a08;
+  text-shadow: 6px 6px 0 rgba(30,0,0,0.4), 0 0 50px rgba(255,50,30,0.6);
+  transform: rotate(-7deg);
+  animation: koSlam 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes koSlam { from { transform: rotate(-7deg) scale(3); opacity: 0; } to { transform: rotate(-7deg) scale(1); opacity: 1; } }
+
+/* ── Exit button ── */
+.btn-exit-battle {
+  position: absolute;
+  top: calc(10px + var(--safe-t));
+  right: calc(12px + var(--safe-r));
+  z-index: 25;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-fast);
+  pointer-events: all;
+}
+.btn-exit-battle:hover {
+  background: rgba(231,76,60,0.7);
+  color: white;
+  border-color: var(--c-danger);
+}
+
+/* ── Toast thông báo (lỗi mic...) ── */
+.battle-toast {
+  position: absolute;
+  left: 50%;
+  top: calc(96px + var(--safe-t));
+  transform: translateX(-50%);
+  z-index: 30;
+  width: min(92vw, 460px);
+  padding: 10px 14px;
+  background: rgba(10, 10, 20, 0.92);
+  border: 1px solid rgba(245,166,35,0.5);
+  border-radius: var(--r-md);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+  pointer-events: none;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  animation: toastIn 0.25s ease both;
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+  to   { opacity: 1; transform: translateX(-50%); }
+}

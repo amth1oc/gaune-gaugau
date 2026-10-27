@@ -1,0 +1,15 @@
+# hệ điều hành / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# thư viện và biến môi trường (key TURN thật đặt trong Netlify, không đưa lên git)
+node_modules/
+.env
+.env.*
+.netlify/
+
+# file nén và log
+*.zip
+*.log

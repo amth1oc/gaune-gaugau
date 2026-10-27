@@ -1,0 +1,66 @@
+/* identity.css — bảng màu & nhãn riêng của Gaune – Gâu Gâu (ghi đè bundle.css, nạp sau bundle) */
+:root { --g-mint:#3fd6a0; --g-teal:#1f9e7a; --g-deep:#0f3b3a; --g-violet:#a78bfa; --g-amber:#ffc83d; }
+
+/* Thanh sức mạnh: bạn = xanh bạc hà, đối thủ = tím */
+#gauge-track { background: rgba(15, 40, 52, 0.78); border-color: rgba(167, 139, 250, 0.55); }
+#gauge-fill-player { background: linear-gradient(90deg, var(--g-mint), var(--g-teal)); }
+#gauge-indicator { border-color: var(--g-teal); box-shadow: 0 4px 12px rgba(0,0,0,.35), 0 0 14px rgba(63,214,160,.45); }
+#gauge-indicator.danger-player { border-color: var(--g-mint); }
+#gauge-indicator.danger-ai { border-color: var(--g-violet); }
+.gauge-label-player { color: var(--g-mint); }
+.gauge-label-ai { color: var(--g-violet); }
+
+/* Màn ngả màu khi thắng/thua thế */
+#tint-warm { background: radial-gradient(ellipse at 50% 55%, #7be8c4 0%, #2bb089 50%, #0c4a45 100%); }
+#tint-cool { background: radial-gradient(ellipse at 50% 50%, #c9b8f5 0%, #8a74c9 60%, #3f3478 100%); }
+
+/* Chữ ĐO VÁN! / HẾT GIỜ! : vàng hổ phách viền xanh đậm (không còn K.O. đỏ) */
+.ko-text, .result-verdict {
+  color: var(--g-amber); -webkit-text-stroke: 3px #0d2f3a;
+  text-shadow: 5px 5px 0 rgba(8, 30, 40, .45), 0 0 46px rgba(63, 214, 160, .55);
+  letter-spacing: 1px;
+}
+.ko-text { font-size: clamp(3.6rem, 15vw, 9rem); }
+.result-verdict { font-size: clamp(3.2rem, 13vw, 7.5rem); }
+
+/* Bảng kết quả: nền xanh đêm, viền bạc hà, số GP màu hổ phách */
+.result-tint.win  { background: radial-gradient(ellipse at 50% 55%, #7be8c4 0%, #2bb089 55%, #0c4a45 100%); }
+.result-tint.lose { background: radial-gradient(ellipse at 50% 50%, #c9b8f5 0%, #8a74c9 60%, #3f3478 100%); }
+.result-panel { background: rgba(12, 38, 48, 0.86); border: 2px solid var(--g-mint); border-radius: 18px; }
+.result-win-lose { letter-spacing: 1px; color: #eafff7; }
+.result-win-lose.lose-text { color: #d6ccf5; }
+.result-wp-amount { color: var(--g-amber); }
+.wp-unit { color: rgba(255, 200, 61, .8); }
+.result-stats b { color: #eafff7; }
+.about-legal a { color: var(--g-mint); }
+
+/* Hộp đồng ý trước khi chơi online */
+.consent-backdrop{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(5,20,28,.72)}
+.consent-box{width:min(92vw,420px);background:#0f2f3c;color:#eafff7;border:2px solid var(--g-mint);border-radius:18px;padding:18px 18px 14px;box-shadow:0 10px 40px rgba(0,0,0,.5);font:500 .92rem/1.55 'Be Vietnam Pro',system-ui,sans-serif}
+.consent-box h3{margin:0 0 8px;font:800 1.15rem 'Baloo 2','Be Vietnam Pro',sans-serif;color:var(--g-amber)}
+.consent-p{margin:0 0 8px}.consent-a{color:var(--g-mint);font-size:.85rem}
+.consent-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+.consent-actions button{border:0;border-radius:12px;padding:10px 16px;font:800 .9rem 'Be Vietnam Pro',sans-serif;cursor:pointer}
+.consent-no{background:rgba(255,255,255,.12);color:#eafff7}.consent-yes{background:var(--g-mint);color:#08302a}
+
+/* ── Công tắc riêng tư (giấu IP) ở sảnh online ── */
+.privacy-row{display:flex;gap:10px;align-items:flex-start;margin:10px 0;padding:10px 12px;border-radius:12px;background:rgba(63,214,160,.10);border:1px solid rgba(63,214,160,.35);cursor:pointer}
+.privacy-row .setting-checkbox{margin-top:3px;flex:0 0 auto}
+.privacy-txt{display:flex;flex-direction:column;gap:2px;font-size:.92rem;text-align:left}
+.privacy-txt small{opacity:.8;font-size:.8rem;line-height:1.35}
+
+/* ── Popup thông báo giữa màn hình (js/core/Popup.js) ── */
+#online-msg{display:none!important}   /* thông báo online nay hiện bằng popup, không còn dòng chữ ở cuối trang */
+.pop-backdrop{position:fixed;inset:0;z-index:100001;display:flex;align-items:flex-end;justify-content:center;padding:18px 14px calc(14px + env(safe-area-inset-bottom,0px));background:rgba(5,14,28,.55);opacity:0;transition:opacity .18s ease}
+.pop-backdrop.show{opacity:1}
+.pop-box{width:min(100%,440px);max-height:80vh;overflow:auto;text-align:center;background:#10233f;color:#f2f7ff;border:2px solid var(--g-amber,#f6c26a);border-radius:20px;padding:20px 20px 16px;box-shadow:0 12px 44px rgba(0,0,0,.55);transform:translateY(110%);transition:transform .28s cubic-bezier(.2,.9,.3,1);font:600 1rem/1.5 'Be Vietnam Pro',system-ui,sans-serif}
+.pop-backdrop.show .pop-box{transform:none}
+.pop-icon{font-size:2.6rem;line-height:1;margin-bottom:6px}
+.pop-box h3{margin:0 0 8px;font:800 1.25rem 'Baloo 2','Be Vietnam Pro',sans-serif;color:var(--g-amber,#f6c26a)}
+.pop-text{margin:0 0 16px;white-space:pre-line;word-break:break-word;user-select:text;-webkit-user-select:text}
+.pop-ok{width:100%;border:0;border-radius:14px;padding:13px 16px;font:800 1rem 'Be Vietnam Pro',sans-serif;cursor:pointer;color:#0b2a24;background:var(--g-mint,#3fd6a0);-webkit-tap-highlight-color:transparent}
+.pop-ok:active{transform:scale(.97)}
+.pop-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);z-index:100002;max-width:min(90vw,440px);padding:12px 18px;border-radius:16px;text-align:center;font:700 .95rem/1.4 'Be Vietnam Pro',system-ui,sans-serif;color:#f2f7ff;background:rgba(16,35,63,.96);border:1.5px solid rgba(246,194,106,.7);box-shadow:0 8px 26px rgba(0,0,0,.5);opacity:0;transform:translate(-50%,16px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+.pop-toast.show{opacity:1;transform:translate(-50%,0)}
+.pop-toast.ok{border-color:rgba(63,214,160,.85);color:#c9ffe6}
+.pop-toast.warn{border-color:rgba(246,194,106,.95);color:#ffe7b3}

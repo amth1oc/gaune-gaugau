@@ -1,0 +1,6 @@
+# Dùng khi triển khai bằng Git hoặc Netlify CLI (KHÔNG áp dụng khi kéo-thả thư mục trên web).
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"

@@ -1,0 +1,110 @@
+/* ═══════════════════════════════════════════
+   online-v2.css — Giao diện màn Online 2 người (v11)
+   Nạp SAU responsive.css nên dùng !important để thắng các luật cũ.
+   Mục tiêu: tiêu đề/chữ chủ đề TO – RÕ, cỡ chữ cân đối theo 3 bậc:
+     tiêu đề 2.2–2.7rem › đầu mục thẻ 1.45rem › nội dung 0.92rem › chú thích 0.84rem
+   ═══════════════════════════════════════════ */
+
+#screen-online {
+  align-items: center !important;
+  padding: var(--head-top) 16px calc(28px + var(--safe-b)) !important;
+  overflow-y: auto;
+}
+
+/* Tiêu đề dùng chung .screen-title (cartoon.css) — KHÔNG ghi đè riêng nữa để đồng bộ với các màn khác */
+.online-sub {
+  margin: -4px 0 16px; max-width: 420px; text-align: center;
+  font: 600 0.95rem/1.4 var(--font-ui); color: var(--c-cream-glass);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* ── Khung chung ── */
+#screen-online .online-box { width: min(480px, 100%) !important; gap: 14px !important; }
+
+/* Trạng thái máy chủ: gộp 1 khối gọn */
+.online-status-wrap { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+#screen-online .server-status, #screen-online .net-diag {
+  background: rgba(var(--rgb-deep), 0.78); border: 1px solid rgba(248, 198, 106, 0.28);
+  border-radius: 14px; padding: 10px 14px;
+  font: 700 0.86rem/1.45 var(--font-ui); color: var(--c-warm-white);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+#screen-online .server-status { justify-content: flex-start; flex-wrap: nowrap; gap: 10px; }
+#screen-online .server-dot { width: 12px; height: 12px; box-shadow: 0 0 8px currentColor; }
+#screen-online .server-status.good  .server-dot { color: #2ecc71; }
+#screen-online .server-status.slow  .server-dot { color: #f5a623; }
+#screen-online .server-status.bad   .server-dot { color: #e74c3c; }
+#screen-online #server-text { flex: 1; min-width: 0; text-align: left; }
+#screen-online .server-recheck {
+  flex-shrink: 0; padding: 6px 12px; font: 800 0.8rem var(--font-ui); color: var(--c-warm-white);
+  background: rgba(248, 198, 106, 0.16); border: 1px solid rgba(248, 198, 106, 0.4); border-radius: 999px;
+}
+#screen-online .net-diag { text-align: left; font-size: 0.82rem; font-weight: 600; }
+#screen-online .net-diag.good { color: #9af0b8; }
+#screen-online .net-diag.bad  { color: #ffb08a; }
+
+/* ── Thẻ tạo / vào phòng: dùng chung kiểu .settings-group (cartoon.css), chỉ căn giữa nội dung ── */
+#screen-online .online-card { gap: 10px !important; }
+#screen-online .online-card h3 {
+  display: flex !important; align-items: center; justify-content: center; gap: 10px;
+  line-height: 1.15; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+.oc-ico { font-size: 1.45rem; line-height: 1; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5)); }
+#screen-online .online-card p { line-height: 1.4; margin: 0 0 4px; }
+
+/* Nút: cùng chiều rộng, chữ lớn rõ */
+#screen-online .online-card .menu-btn {
+  width: 100% !important; max-width: 340px; min-height: 52px;
+  font-family: var(--font-display) !important; font-size: 1.25rem !important; font-weight: 800 !important; letter-spacing: 0.5px;
+}
+#screen-online #btn-join:disabled { opacity: 0.6; }
+
+/* Ô nhập mã: to, rõ, placeholder đọc được */
+#screen-online .join-code {
+  width: 100% !important; max-width: 340px !important; box-sizing: border-box;
+  padding: 12px 14px !important; font-size: 1.7rem !important; font-weight: 800 !important; letter-spacing: 6px !important;
+  color: var(--c-sunset-gold) !important; background: rgba(0, 0, 0, 0.45) !important;
+  border: 2px solid rgba(248, 198, 106, 0.45) !important; border-radius: 14px !important;
+}
+#screen-online .join-code::placeholder { color: rgba(251, 236, 205, 0.55); letter-spacing: 3px; font-size: 1.05rem; font-weight: 700; }
+#screen-online .join-code:focus { border-color: var(--c-sunset-gold) !important; box-shadow: 0 0 0 3px rgba(248, 198, 106, 0.25); }
+
+/* Dải "hoặc" */
+.online-or { width: 100%; display: flex; align-items: center; gap: 12px; margin: -2px 0; }
+.online-or::before, .online-or::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(248, 198, 106, 0.6)); }
+.online-or::after { transform: scaleX(-1); }
+.online-or span { font: 800 0.85rem var(--font-ui); letter-spacing: 3px; color: var(--c-sunset-gold); text-transform: uppercase; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8); }
+
+/* Thông báo lỗi/ trạng thái */
+#screen-online .online-msg { font-size: 0.92rem !important; font-weight: 700; line-height: 1.45; color: var(--c-sunset-gold); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8); margin-top: 4px; }
+#screen-online .online-msg.ok { color: #9af0b8; }
+
+/* Mẹo */
+#screen-online .online-tip {
+  padding: 12px 16px !important; background: rgba(var(--rgb-deep), 0.7) !important;
+  border: 1px dashed rgba(248, 198, 106, 0.45) !important; border-radius: 16px !important;
+  font-size: 0.86rem !important; line-height: 1.5 !important; color: var(--c-cream-glass) !important;
+}
+.online-tip .tip-title { font: 800 1rem var(--font-display); color: var(--c-sunset-gold); margin-bottom: 4px; }
+.online-tip ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.online-tip strong { color: var(--c-sunset-gold) !important; }
+
+/* ── Trong phòng ── */
+#screen-online .room-code-label { font-size: 0.85rem; font-weight: 800; color: var(--c-cream-glass); letter-spacing: 4px; }
+#screen-online .room-code { font-size: 3rem !important; letter-spacing: 8px !important; padding-left: 8px; color: var(--c-sunset-gold) !important; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45), 0 0 24px rgba(248, 198, 106, 0.35); }
+#screen-online .room-copy { font-size: 0.9rem; padding: 8px 18px; color: var(--c-warm-white); border-radius: 999px; }
+#screen-online .room-hint { font-size: 0.86rem; color: var(--c-sunset-gold); max-width: 360px; margin: 8px auto 0; }
+#screen-online .room-status { font-size: 1.02rem; font-weight: 800; color: var(--c-warm-white); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8); }
+#screen-online .room-status.ok { color: #9af0b8; }
+#screen-online .slot-who { font-size: 0.75rem; color: var(--c-cream-glass); }
+#screen-online .slot-char { font-size: 1.25rem; font-weight: 800; color: #fff; }
+#screen-online .slot-ready { font-size: 0.85rem; }
+#screen-online .room-pick-title { font-size: 0.85rem; color: var(--c-sunset-gold); letter-spacing: 3px; }
+#screen-online .room-char { font-size: 0.95rem; padding: 9px 14px; }
+#screen-online .room-ping { font-size: 0.8rem; }
+#screen-online #online-room .menu-btn { min-height: 52px; font-size: 1.25rem; }
+
+@media (max-width: 380px) {
+  #screen-online .join-code { font-size: 1.5rem !important; letter-spacing: 4px !important; }
+  #screen-online .server-status { flex-wrap: wrap; }
+}

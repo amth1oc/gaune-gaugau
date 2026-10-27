@@ -1,0 +1,135 @@
+/* onboarding.css — chuẩn hoá mic + hướng dẫn lần đầu. Chỉ dùng transform/opacity cho hiệu ứng (nhẹ máy, đỡ nóng). */
+#screen-onboarding {
+  justify-content: center;
+  padding: calc(56px + var(--safe-t)) 16px calc(16px + var(--safe-b));
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(248,198,106,.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 110%, rgba(232,117,57,.16) 0%, transparent 55%),
+    var(--c-bg);
+}
+.ob-skip {
+  position: absolute; top: calc(14px + var(--safe-t)); right: calc(14px + var(--safe-r, 0px)); z-index: 20;
+  padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  background: rgba(var(--rgb-brown), .65); color: var(--c-text-2); border: 1px solid var(--c-border);
+  font: 800 .9rem var(--font-display); letter-spacing: .5px;
+}
+.ob-skip:active { transform: scale(.95); }
+
+.ob-wrap { width: min(440px, 100%); max-height: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+/* thanh tiến trình 3 bước */
+.ob-steps { list-style: none; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 0; margin: 0; }
+.ob-steps li { display: flex; align-items: center; gap: 6px; color: var(--c-text-3); font-size: .78rem; font-weight: 800; letter-spacing: .3px; }
+.ob-steps li + li::before { content: ''; width: 22px; height: 2px; background: var(--c-border); border-radius: 2px; margin-right: 4px; }
+.ob-steps b { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.08); border: 1px solid var(--c-border); font-size: .78rem; }
+.ob-steps li.on { color: var(--c-primary); }
+.ob-steps li.on b { background: var(--c-primary); color: #3a1c00; border-color: transparent; box-shadow: 0 0 12px var(--c-primary-glow); }
+.ob-steps li.done { color: var(--c-mint); }
+.ob-steps li.done b { background: var(--c-mint); color: #06302d; border-color: transparent; font-size: 0; }
+.ob-steps li.done b::after { content: '✓'; font-size: .85rem; }
+.ob-steps li:not(.on) span { display: none; }
+@media (min-width: 420px) { .ob-steps li:not(.on) span { display: inline; } }
+
+/* khung chính */
+.ob-panel {
+  display: none; width: 100%; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+  padding: 18px 18px 14px; border-radius: 24px;
+  background: linear-gradient(180deg, rgba(var(--rgb-brown), .78), rgba(var(--rgb-deep), .78));
+  border: 1px solid var(--c-border);
+  box-shadow: 0 18px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.ob-panel.on { display: flex; animation: obIn .28s ease-out; }
+@keyframes obIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.ob-title { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: 2px; color: var(--c-primary); text-shadow: 0 0 18px var(--c-primary-glow); line-height: 1.1; }
+.ob-sub { font-size: .86rem; line-height: 1.45; color: var(--c-text-2); max-width: 340px; }
+.ob-note { font-size: .74rem; color: var(--c-text-3); }
+
+.ob-actions { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 2px; }
+.ob-actions .menu-btn { width: min(300px, 100%); }
+.ob-link { background: none; border: none; color: var(--c-text-3); font: 700 .86rem var(--font-ui); padding: 10px 14px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.ob-link:active { color: var(--c-primary); }
+
+/* ── Bước 1: sân khấu mic ── */
+.ob-stage { position: relative; width: 170px; height: 170px; display: grid; place-items: center; margin: 4px 0; }
+.ob-pulse {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle, rgba(248,198,106,.55) 0%, rgba(248,198,106,.18) 55%, transparent 72%);
+  transform: scale(.62); transition: transform .06s linear; will-change: transform;
+}
+.ob-stage.hot .ob-pulse { background: radial-gradient(circle, rgba(255,106,46,.7) 0%, rgba(255,106,46,.22) 55%, transparent 72%); }
+.ob-stage.ok .ob-pulse { background: radial-gradient(circle, rgba(56,178,172,.6) 0%, rgba(56,178,172,.2) 55%, transparent 72%); transform: scale(.9); }
+.ob-core {
+  position: relative; width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; font-size: 3rem;
+  background: linear-gradient(145deg, #F8C66A, #D97706); box-shadow: 0 6px 0 #7A4000, 0 10px 24px rgba(0,0,0,.4);
+}
+.ob-stage.ok .ob-core { background: linear-gradient(145deg, #5fd3cc, #1f8f89); box-shadow: 0 6px 0 #0d4f4b, 0 10px 24px rgba(0,0,0,.4); }
+.ob-stage.wait .ob-core span { animation: obBob 1.4s ease-in-out infinite; }
+@keyframes obBob { 50% { transform: translateY(-4px) scale(1.06); } }
+
+.ob-paws { display: flex; gap: 10px; font-size: 1.9rem; }
+.ob-paws span { filter: grayscale(1) opacity(.35); transform: scale(.85); transition: transform .2s, filter .2s; }
+.ob-paws span.lit { filter: none; transform: scale(1.15); animation: obPop .35s ease-out; }
+@keyframes obPop { 0% { transform: scale(.6); } 60% { transform: scale(1.4); } 100% { transform: scale(1.15); } }
+.ob-phase { font-family: var(--font-display); font-size: 1.25rem; color: var(--c-text); min-height: 1.4em; }
+.ob-msg { min-height: 2.4em; font-size: .8rem; font-weight: 700; line-height: 1.35; color: var(--c-text-2); max-width: 340px; }
+.ob-msg.ok { color: var(--c-success); } .ob-msg.bad { color: var(--c-danger); }
+
+/* ── Bước 2: thẻ hướng dẫn vuốt ngang ── */
+.ob-slides { width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-radius: 18px; }
+.ob-slides::-webkit-scrollbar { display: none; }
+.ob-slide { flex: 0 0 100%; scroll-snap-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 6px 4px 2px; }
+.ob-slide h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--c-primary); letter-spacing: .5px; }
+.ob-slide p { font-size: .86rem; line-height: 1.5; color: var(--c-text-2); max-width: 330px; min-height: 4.2em; }
+.ob-slide p b { color: var(--c-primary); }
+.ob-dots2 { display: flex; gap: 7px; }
+.ob-dots2 i { width: 8px; height: 8px; border-radius: 4px; background: var(--c-border); transition: width .2s, background .2s; }
+.ob-dots2 i.on { width: 22px; background: var(--c-primary); }
+
+.ob-art { width: 100%; height: 124px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid var(--c-border); display: flex; align-items: center; justify-content: center; gap: 8px; overflow: hidden; position: relative; }
+/* hình minh hoạ chỉ chạy ở thẻ đang xem (đỡ tốn máy) */
+.ob-slide:not(.on) .ob-art * { animation-play-state: paused !important; }
+
+.art-volume { align-items: flex-end; padding-bottom: 20px; }
+.art-volume i { width: 16px; border-radius: 6px 6px 3px 3px; background: linear-gradient(180deg, #F8C66A, #E87539); transform-origin: bottom; animation: obBar 1.1s ease-in-out infinite; }
+.art-volume i:nth-child(1) { height: 28px; animation-delay: 0s; } .art-volume i:nth-child(2) { height: 46px; animation-delay: .12s; }
+.art-volume i:nth-child(3) { height: 66px; animation-delay: .24s; } .art-volume i:nth-child(4) { height: 82px; animation-delay: .36s; } .art-volume i:nth-child(5) { height: 96px; animation-delay: .48s; }
+@keyframes obBar { 0%,100% { transform: scaleY(.45); } 50% { transform: scaleY(1); } }
+.art-volume em { position: absolute; right: 16px; top: 14px; font: 900 1.5rem var(--font-display); font-style: normal; color: #ffd21f; transform: rotate(-8deg); animation: obWoof 1.1s ease-in-out infinite; }
+@keyframes obWoof { 50% { transform: rotate(-8deg) scale(1.25); } }
+
+.art-combo span { font: 900 1.05rem var(--font-display); padding: 8px 10px; border-radius: 12px; background: rgba(248,198,106,.16); color: var(--c-primary); border: 1px solid rgba(248,198,106,.4); opacity: .25; animation: obChip 3s ease-in-out infinite; }
+.art-combo span:nth-child(1) { animation-delay: 0s; } .art-combo span:nth-child(2) { animation-delay: .35s; } .art-combo span:nth-child(3) { animation-delay: .7s; }
+.art-combo span:nth-child(4) { animation-delay: 1.05s; } .art-combo span:nth-child(5) { animation-delay: 1.4s; color: #ff6a2e; border-color: #ff6a2e; }
+@keyframes obChip { 0%,10% { opacity: .25; transform: scale(.9); } 22%,70% { opacity: 1; transform: scale(1.12); } 90%,100% { opacity: .25; transform: scale(.9); } }
+
+.art-tug { padding: 0 14px; }
+.art-tug b { font-size: 2.1rem; font-weight: 400; }
+.tug-bar { position: relative; flex: 1; height: 16px; border-radius: 10px; background: linear-gradient(90deg, #F8C66A 0 50%, #4AA3FF 50% 100%); overflow: hidden; }
+.tug-bar u { position: absolute; top: -3px; left: 50%; width: 8px; height: 22px; border-radius: 4px; background: #fff; box-shadow: 0 0 8px #fff; animation: obTug 3.2s ease-in-out infinite; }
+@keyframes obTug { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-70px); } 75% { transform: translateX(70px); } }
+
+.art-stats { flex-wrap: wrap; padding: 10px; }
+.art-stats span { font-weight: 800; font-size: .82rem; padding: 7px 12px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid var(--c-border); color: var(--c-text-2); animation: obFloat 2.4s ease-in-out infinite; }
+.art-stats span:nth-child(2) { animation-delay: .3s; } .art-stats span:nth-child(3) { animation-delay: .6s; }
+@keyframes obFloat { 50% { transform: translateY(-5px); } }
+
+/* ── Bước 3 ── */
+.ob-trophy { font-size: 3.4rem; animation: obBob 1.6s ease-in-out infinite; }
+.ob-summary { display: flex; flex-direction: column; gap: 8px; width: 100%; align-items: stretch; }
+.ob-chip { text-align: left; padding: 10px 14px; border-radius: 14px; font-size: .86rem; font-weight: 700; line-height: 1.35; background: rgba(255,255,255,.06); border: 1px solid var(--c-border); color: var(--c-text-2); }
+.ob-chip.ok { border-color: rgba(56,178,172,.6); background: rgba(56,178,172,.12); color: #bff3ef; }
+.ob-chip small { display: block; font-weight: 600; color: var(--c-text-3); margin-top: 2px; }
+
+@media (max-height: 640px) {
+  .ob-stage { width: 130px; height: 130px; } .ob-core { width: 80px; height: 80px; font-size: 2.3rem; }
+  .ob-art { height: 100px; } .ob-sub { display: none; } .ob-title { font-size: 1.4rem; }
+}
+
+/* ── Tiết kiệm máy cho TOÀN GAME: màn hình đang ẩn không được vẽ và không chạy hoạt ảnh lặp ── */
+.screen:not(.active) {
+  visibility: hidden;
+  transition: opacity var(--t-mid), transform var(--t-mid), visibility 0s linear var(--t-mid);
+}
+.screen:not(.active), .screen:not(.active) *, .screen:not(.active) *::before, .screen:not(.active) *::after {
+  animation-play-state: paused !important;
+}

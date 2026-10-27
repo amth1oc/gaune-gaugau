@@ -1,0 +1,1084 @@
+/* ═══════════════════════════════════════════════════════════════════
+   responsive.css — Sunset Glass Arena Mobile & Responsive System
+   Crafted specifically for smartphones (iOS Safari, Android Chrome),
+   foldables, notched displays, and landscape orientation.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 1. TOUCH & HAPTIC INTERACTION ── */
+@media (hover: none) {
+  /* Tránh dính hover state trên thiết bị cảm ứng */
+  .char-card:hover:not(.locked),
+  .menu-banner-card:hover,
+  .menu-btn:hover,
+  .btn-secondary:hover,
+  .btn-primary:hover:not(:disabled),
+  .stage-chip:hover,
+  .btn-back:hover,
+  .menu-icon-btn:hover,
+  .result-btn:hover {
+    transform: none;
+    box-shadow: inherit;
+  }
+
+  /* Phản hồi chạm tức thì khi ngón tay ấn xuống */
+  .menu-banner-card:active {
+    transform: scale(0.975);
+    border-color: var(--glass-border-gold);
+    transition: transform 0.08s ease;
+  }
+
+  .char-card:active:not(.locked) {
+    transform: scale(0.96);
+    transition: transform 0.08s ease;
+  }
+
+  .stage-chip:active:not(.locked) {
+    transform: scale(0.95);
+    transition: transform 0.08s ease;
+  }
+
+  .btn-primary:active:not(:disabled),
+  .menu-btn:active:not(:disabled) {
+    transform: scale(0.96) translateY(2px);
+    transition: transform 0.08s ease;
+  }
+
+  .menu-icon-btn:active,
+  .btn-back:active,
+  .btn-exit-battle:active {
+    transform: scale(0.92);
+    transition: transform 0.08s ease;
+  }
+}
+
+/* Kích thước mục tiêu cảm ứng theo tiêu chuẩn Apple HIG (tối thiểu 44×44px) */
+@media (pointer: coarse) {
+  .menu-icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .btn-exit-battle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .btn-back {
+    min-height: 42px;
+    padding: 8px 18px;
+  }
+
+  .tap-bark-inner {
+    padding: 13px 40px 11px;
+  }
+
+  .char-card {
+    touch-action: manipulation;
+  }
+
+  .stage-chip {
+    touch-action: manipulation;
+  }
+
+  .setting-control input[type="range"] {
+    min-height: 36px;
+  }
+}
+
+/* Ẩn các nút fixed thuộc về màn hình đang không kích hoạt */
+.screen:not(.active) .btn-back,
+.screen:not(.active) .btn-exit-battle,
+.screen:not(.active) .select-footer,
+.screen:not(.active) #bottom-hud,
+.screen:not(.active) .tap-bark-btn {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. ĐIỆN THOẠI DỌC & MÀN HÌNH NHỎ (≤ 680px)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 680px) {
+
+  /* ── A. NÚT QUAY LẠI CỐ ĐỊNH TRÊN MỌI MÀN HÌNH CUỘN ── */
+  .btn-back {
+    position: fixed !important;
+    top: calc(10px + var(--safe-t)) !important;
+    left: calc(12px + var(--safe-l)) !important;
+    z-index: 40 !important;
+    padding: 8px 16px 7px !important;
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    border-radius: var(--r-full) !important;
+    background: rgba(var(--rgb-deep), 0.88) !important;
+    border: 1px solid var(--glass-border-light) !important;
+    box-shadow: 0 4px 14px rgba(20, 10, 6, 0.5), var(--glass-highlight) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  /* Tiêu đề các màn hình */
+  .screen-title {
+    font-size: clamp(1.7rem, 6.4vw, 2.1rem) !important;
+    margin-bottom: 12px !important;
+    letter-spacing: 0.5px !important;
+    padding: 0 42px !important; /* Tránh va chạm với nút quay lại ở góc */
+    text-align: center !important;
+  }
+
+  .screen-title::after {
+    width: 48px !important;
+    height: 4px !important;
+    margin: 6px auto 0 !important;
+  }
+
+  /* ── B. MENU CHÍNH (HOME) ── */
+  #screen-menu {
+    padding: calc(6px + var(--safe-t)) 14px calc(24px + var(--safe-b)) !important;
+  }
+
+  .menu-top-bar {
+    padding: calc(6px + var(--safe-t)) 2px 0 !important;
+    max-width: 440px !important;
+  }
+
+  .menu-wp-display {
+    padding: 5px 14px 5px 8px !important;
+    gap: 8px !important;
+  }
+
+  .wp-gem-icon {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .wp-gem-icon svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .wp-value {
+    font-size: 1.15rem !important;
+  }
+
+  .wp-label {
+    font-size: 0.78rem !important;
+  }
+
+  .menu-icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .menu-icon-btn svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+
+  .menu-content {
+    gap: 10px !important;
+    max-width: 440px !important;
+  }
+
+  /* Hero Canvas hoạt hình chó thu nhỏ vừa vặn */
+  .menu-hero {
+    width: min(84vw, 320px) !important;
+    max-height: 145px !important;
+    aspect-ratio: 640 / 290 !important;
+    margin: -4px auto 0 !important;
+  }
+
+  /* Logo Gaune – Gâu Gâu */
+  .menu-logo {
+    margin-top: -4px !important;
+    gap: 2px !important;
+  }
+
+  .logo-badge-top {
+    font-size: 0.66rem !important;
+    padding: 2px 10px 1px !important;
+    letter-spacing: 1.2px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .title-row-top {
+    font-size: clamp(2.1rem, 7.8vw, 2.7rem) !important;
+    -webkit-text-stroke: 1.5px var(--c-espresso) !important;
+  }
+
+  .title-row-bottom {
+    font-size: clamp(1.95rem, 7.2vw, 2.5rem) !important;
+    -webkit-text-stroke: 1.5px var(--c-espresso) !important;
+    letter-spacing: 2px !important;
+    margin-top: -3px !important;
+  }
+
+  .logo-sub {
+    font-size: 0.74rem !important;
+    letter-spacing: 0.5px !important;
+    margin-top: 1px !important;
+  }
+
+  /* Các thẻ banner chiến dịch */
+  .menu-nav {
+    width: 100% !important;
+    max-width: 440px !important;
+    gap: 10px !important;
+    margin-top: 2px !important;
+  }
+
+  .menu-banner-card {
+    height: 90px !important;
+    padding: 0 16px !important;
+    border-radius: var(--r-md) !important;
+  }
+
+  /* Giới hạn chiều rộng chữ để KHÔNG bao giờ đè lên chó */
+  .banner-card-content {
+    max-width: 60% !important;
+    gap: 2px !important;
+  }
+
+  .banner-tag {
+    font-size: 0.62rem !important;
+    padding: 2px 8px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .banner-title {
+    font-size: 1.35rem !important;
+    letter-spacing: 0.8px !important;
+    line-height: 1.05 !important;
+  }
+
+  .banner-desc {
+    font-size: 0.78rem !important;
+  }
+
+  .banner-card-avatar {
+    height: 80px !important;
+    right: 12px !important;
+    bottom: 0 !important;
+  }
+
+  .banner-card-avatars {
+    height: 76px !important;
+    right: 10px !important;
+    bottom: 0 !important;
+  }
+
+  .trio-dog {
+    height: 68px !important;
+    margin-left: -20px !important;
+  }
+
+  .trio-1 { height: 60px !important; }
+  .trio-2 { height: 72px !important; }
+  .trio-3 { height: 62px !important; }
+
+  .banner-card-paw {
+    top: 10px !important;
+    right: 12px !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* ── C. MÀN CHỌN NHÂN VẬT ── */
+  #screen-character-select {
+    padding: calc(56px + var(--safe-t)) 12px calc(108px + var(--safe-b)) !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+
+  .select-layout {
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  /* Khung xem trước nhân vật nằm phía trên */
+  .select-preview-panel {
+    order: -1 !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 12px 14px !important;
+    gap: 12px !important;
+    border-radius: var(--r-md) !important;
+  }
+
+  .preview-dog-canvas {
+    width: 90px !important;
+    height: 90px !important;
+    flex-shrink: 0 !important;
+    border-radius: 12px !important;
+  }
+
+  #preview-canvas {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  .preview-info {
+    flex: 1 !important;
+    min-width: 0 !important;
+    align-items: flex-start !important;
+    gap: 5px !important;
+  }
+
+  .preview-name {
+    font-size: 1.25rem !important;
+    text-align: left !important;
+    line-height: 1.1 !important;
+  }
+
+  .preview-desc {
+    font-size: 0.74rem !important;
+    text-align: left !important;
+    line-height: 1.35 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  .preview-stats {
+    width: 100% !important;
+    gap: 4px !important;
+    margin-top: 2px !important;
+  }
+
+  .stat-row {
+    font-size: 0.74rem !important;
+    gap: 6px !important;
+  }
+
+  .stat-row-label {
+    width: 54px !important;
+    font-size: 0.68rem !important;
+  }
+
+  .stat-row-bar-bg {
+    height: 6px !important;
+  }
+
+  .stat-row-val {
+    width: 16px !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* Chỉ số suy ra (thưởng nhịp nhanh...) dạng thẻ gọn gàng */
+  .stat-derived {
+    font-size: 0.68rem !important;
+    line-height: 1.4 !important;
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    margin-top: 4px !important;
+    border: 1px solid rgba(248, 198, 106, 0.25) !important;
+  }
+
+  .stat-derived small {
+    display: none !important;
+  }
+
+  .preview-barkwords {
+    justify-content: flex-start !important;
+    gap: 3px !important;
+    margin-top: 2px !important;
+  }
+
+  .barkword-tag {
+    font-size: 0.68rem !important;
+    padding: 2px 7px !important;
+    margin: 1px !important;
+  }
+
+  /* Lưới 2 cột thẻ chó */
+  .character-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .char-card {
+    padding: 12px 6px 10px !important;
+    min-height: 0 !important;
+    gap: 4px !important;
+    border-radius: var(--r-md) !important;
+  }
+
+  .char-card-img {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .char-card-emoji {
+    min-height: 60px !important;
+    font-size: 2.3rem !important;
+  }
+
+  .char-card-name {
+    font-size: 0.95rem !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .char-card-title {
+    font-size: 0.66rem !important;
+  }
+
+  .char-card-stats {
+    margin-top: 2px !important;
+    gap: 3px !important;
+  }
+
+  .mini-stat-bar-bg {
+    height: 4px !important;
+  }
+
+  .mini-stat-label {
+    font-size: 0.56rem !important;
+  }
+
+  .lock-badge {
+    top: -7px !important;
+    font-size: 0.68rem !important;
+    padding: 2px 8px !important;
+  }
+
+  .selected-badge {
+    top: -8px !important;
+    font-size: 0.7rem !important;
+    padding: 2px 9px !important;
+  }
+
+  /* Chọn bối cảnh */
+  .stage-picker {
+    margin-top: 14px !important;
+    width: 100% !important;
+  }
+
+  .stage-picker-title {
+    font-size: 1.1rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .stage-chips {
+    gap: 8px !important;
+    padding: 2px 2px 6px !important;
+  }
+
+  .stage-chip {
+    width: 106px !important;
+    padding: 5px 6px !important;
+    border-radius: 10px !important;
+    gap: 5px !important;
+  }
+
+  .stage-thumb {
+    border-radius: 6px !important;
+    font-size: 1.3rem !important;
+  }
+
+  .stage-name {
+    font-size: 0.68rem !important;
+  }
+
+  .stage-lock {
+    font-size: 0.58rem !important;
+    padding: 2px 5px !important;
+  }
+
+  /* Thanh nút cố định dưới cùng */
+  .select-footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 35 !important;
+    padding: 10px 16px calc(12px + var(--safe-b)) !important;
+    background: rgba(var(--rgb-deep), 0.94) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-top: 1px solid var(--glass-border-light) !important;
+    box-shadow: 0 -8px 24px rgba(20, 10, 6, 0.5), var(--glass-highlight) !important;
+  }
+
+  .select-footer-wp {
+    font-size: 1.05rem !important;
+  }
+
+  #btn-confirm-character {
+    padding: 11px 24px 9px !important;
+    font-size: 1.15rem !important;
+    min-height: 46px !important;
+    border-radius: var(--r-full) !important;
+  }
+
+  /* ── D. MÀN ĐẤU TRƯỜNG (BATTLE HUD & CONTROLS) ── */
+  /* Thanh kéo co đỉnh màn hình */
+  #gauge-wrapper {
+    padding: calc(8px + var(--safe-t)) calc(46px + var(--safe-r)) 2px calc(12px + var(--safe-l)) !important;
+    width: 100% !important;
+  }
+
+  #gauge-track {
+    height: 18px !important;
+    border-radius: var(--r-full) !important;
+  }
+
+  #gauge-indicator {
+    min-width: 38px !important;
+    height: 24px !important;
+    border-radius: var(--r-full) !important;
+    padding: 0 4px !important;
+  }
+
+  #gauge-pct {
+    font-size: 0.65rem !important;
+  }
+
+  .gauge-labels {
+    font-size: 0.7rem !important;
+    margin-top: 3px !important;
+    padding: 0 2px !important;
+  }
+
+  .gauge-label-player,
+  .gauge-label-ai {
+    max-width: 44% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Nút thoát trận */
+  .btn-exit-battle {
+    position: fixed !important;
+    top: calc(8px + var(--safe-t)) !important;
+    right: calc(10px + var(--safe-r)) !important;
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 1rem !important;
+    z-index: 40 !important;
+    background: rgba(var(--rgb-deep), 0.85) !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4), var(--glass-highlight) !important;
+  }
+
+  /* Đồng hồ và hướng dẫn */
+  #battle-hud {
+    gap: 1px !important;
+    padding: 0 10px !important;
+  }
+
+  .battle-timer {
+    font-size: 2.2rem !important;
+    line-height: 1 !important;
+  }
+
+  .hint-main {
+    font-size: 0.76rem !important;
+    max-width: 88vw !important;
+    line-height: 1.25 !important;
+  }
+
+  .hint-sub {
+    display: none !important;
+  }
+
+  /* HUD dưới: Mic + Combo + Tổng sủa */
+  #bottom-hud {
+    position: fixed !important;
+    bottom: calc(76px + var(--safe-b)) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 calc(12px + var(--safe-r)) 0 calc(12px + var(--safe-l)) !important;
+    gap: 6px !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    pointer-events: none !important;
+    z-index: 20 !important;
+  }
+
+  #mic-section {
+    padding: 5px 9px !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+    flex-shrink: 1 !important;
+    border-radius: var(--r-full) !important;
+  }
+
+  .mic-icon-wrapper svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  #mic-bar-container {
+    width: 54px !important;
+    height: 7px !important;
+  }
+
+  .mic-labels {
+    font-size: 0.66rem !important;
+  }
+
+  #mic-volume-text {
+    font-size: 0.7rem !important;
+  }
+
+  #combo-display,
+  #bark-total-display {
+    padding: 4px 8px !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .combo-count,
+  #bark-total-count {
+    font-size: 1.25rem !important;
+    line-height: 1 !important;
+  }
+
+  .combo-label,
+  .bark-total-label {
+    font-size: 0.54rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  /* Nút SỦA lớn giữa màn hình */
+  .tap-bark-btn {
+    position: fixed !important;
+    bottom: calc(14px + var(--safe-b)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 25 !important;
+  }
+
+  .tap-bark-inner {
+    padding: 12px 36px 10px !important;
+    border-radius: var(--r-full) !important;
+    gap: 8px !important;
+    box-shadow: 0 8px 24px rgba(232, 117, 57, 0.55), 0 0 16px rgba(248, 198, 106, 0.3), var(--glass-highlight) !important;
+  }
+
+  .tap-bark-text {
+    font-size: 1.45rem !important;
+    letter-spacing: 2px !important;
+    font-weight: 800 !important;
+  }
+
+  .tap-bark-emoji svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* Đếm ngược và KO overlay */
+  .countdown-number {
+    font-size: clamp(2.4rem, 8vh, 3.6rem) !important;
+    margin-top: 14vh !important;
+  }
+
+  .countdown-number.go-text {
+    font-size: min(5.5rem, 16vh, 18vw) !important;
+  }
+
+  .ko-text {
+    font-size: clamp(3.8rem, 18vw, 7.5rem) !important;
+  }
+
+  .battle-toast {
+    width: min(92vw, 360px) !important;
+    font-size: 0.78rem !important;
+    top: calc(85px + var(--safe-t)) !important;
+  }
+
+  /* ── E. MÀN HÌNH KẾT QUẢ ── */
+  #screen-result {
+    padding: calc(12px + var(--safe-t)) 14px calc(16px + var(--safe-b)) !important;
+  }
+
+  .result-verdict {
+    font-size: clamp(3.5rem, 14vw, 5.5rem) !important;
+    top: clamp(6%, 8vh, 10%) !important;
+  }
+
+  .result-center {
+    width: min(94vw, 400px) !important;
+    gap: 12px !important;
+    padding: 0 !important;
+    margin: auto !important;
+  }
+
+  .result-panel {
+    padding: 16px 14px 14px !important;
+    border-radius: var(--r-md) !important;
+  }
+
+  .result-win-lose {
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem) !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .result-wp-amount {
+    font-size: 2rem !important;
+    margin-top: 4px !important;
+  }
+
+  .result-stats {
+    gap: 6px 12px !important;
+    font-size: 0.8rem !important;
+    margin-top: 10px !important;
+  }
+
+  .result-actions {
+    width: 100% !important;
+    gap: 8px !important;
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .result-btn {
+    flex: 1 !important;
+    min-width: 0 !important;
+    padding: 9px 12px !important;
+    font-size: 0.92rem !important;
+    border-radius: var(--r-full) !important;
+  }
+
+  .result-btn small {
+    font-size: 0.58rem !important;
+  }
+
+  /* ── F. MÀN HÌNH CÀI ĐẶT & XẾP HẠNG ── */
+  #screen-settings,
+  #screen-rankings {
+    padding-top: calc(56px + var(--safe-t)) !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-bottom: calc(28px + var(--safe-b)) !important;
+    justify-content: flex-start !important;
+  }
+
+  .settings-content,
+  .rankings-content {
+    width: 100% !important;
+    gap: 12px !important;
+    padding: 0 0 24px !important;
+  }
+
+  .settings-group {
+    padding: 14px 12px !important;
+    border-radius: var(--r-md) !important;
+    gap: 12px !important;
+  }
+
+  .settings-group-title {
+    font-size: 1.2rem !important;
+  }
+
+  .setting-item label {
+    font-size: 0.88rem !important;
+  }
+
+  .setting-control input[type="range"] {
+    height: 6px !important;
+  }
+
+  .about-text {
+    font-size: 0.78rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Hàng 3 thẻ tóm tắt thành tích xếp hạng (Thắng / Thua / Tổng WP) */
+  #rankings-content > div:first-child {
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+
+  #rankings-content > div:first-child > div {
+    flex: 1 !important;
+    min-width: 80px !important;
+    padding: 10px 6px !important;
+  }
+
+  #rankings-content > div:first-child > div > div:first-child {
+    font-size: 1.5rem !important;
+  }
+
+  /* ── G. MÀN HÌNH ONLINE ── */
+  #screen-online {
+    padding: calc(56px + var(--safe-t)) 12px calc(24px + var(--safe-b)) !important;
+  }
+
+  .online-box {
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .online-card {
+    padding: 14px 12px !important;
+    gap: 8px !important;
+    border-radius: var(--r-md) !important;
+  }
+
+  .online-card h3 {
+    font-size: 1.2rem !important;
+  }
+
+  .online-card p {
+    font-size: 0.88rem !important;
+  }
+
+  .join-code {
+    font-size: 1.4rem !important;
+    padding: 8px !important;
+    letter-spacing: 4px !important;
+    width: 100% !important;
+    max-width: 180px !important;
+  }
+
+  .room-code {
+    font-size: 2.2rem !important;
+    letter-spacing: 6px !important;
+  }
+
+  .room-players {
+    gap: 6px !important;
+  }
+
+  .room-slot {
+    padding: 8px 4px !important;
+  }
+
+  .slot-char {
+    font-size: 0.9rem !important;
+  }
+
+  .room-chars {
+    gap: 6px !important;
+  }
+
+  .room-char {
+    padding: 6px 10px !important;
+    font-size: 0.8rem !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   3. MÀN HÌNH SIÊU NHỎ (≤ 360px — iPhone SE 1st gen, Galaxy Fold ngoài)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 360px) {
+  .menu-hero {
+    width: 220px !important;
+    max-height: 110px !important;
+  }
+
+  .title-row-top {
+    font-size: 1.95rem !important;
+  }
+
+  .title-row-bottom {
+    font-size: 1.8rem !important;
+  }
+
+  .menu-banner-card {
+    height: 84px !important;
+    padding: 0 12px !important;
+  }
+
+  .banner-title {
+    font-size: 1.2rem !important;
+  }
+
+  .banner-tag {
+    font-size: 0.58rem !important;
+  }
+
+  .banner-desc {
+    font-size: 0.72rem !important;
+  }
+
+  .banner-card-avatar {
+    height: 72px !important;
+  }
+
+  .trio-dog {
+    height: 56px !important;
+    margin-left: -18px !important;
+  }
+
+  .preview-dog-canvas {
+    width: 76px !important;
+    height: 76px !important;
+  }
+
+  #preview-canvas {
+    width: 76px !important;
+    height: 76px !important;
+  }
+
+  .char-card-img {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .char-card-emoji {
+    min-height: 52px !important;
+    font-size: 2rem !important;
+  }
+
+  .stage-chip {
+    width: 94px !important;
+  }
+
+  #mic-bar-container {
+    width: 44px !important;
+  }
+
+  #bottom-hud {
+    gap: 4px !important;
+    padding: 0 8px !important;
+  }
+
+  #combo-display,
+  #bark-total-display {
+    padding: 3px 6px !important;
+  }
+
+  .tap-bark-inner {
+    padding: 10px 28px 8px !important;
+  }
+
+  .tap-bark-text {
+    font-size: 1.3rem !important;
+  }
+
+  .result-actions {
+    flex-direction: column !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   4. XOAY NGANG & MÀN HÌNH THẤP (≤ 540px chiều cao)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-height: 540px) {
+  .menu-content {
+    gap: 8px !important;
+    padding-top: calc(4px + var(--safe-t)) !important;
+  }
+
+  .menu-hero {
+    width: min(44vw, 220px) !important;
+    max-height: 90px !important;
+    margin: -4px 0 !important;
+  }
+
+  .title-row-top {
+    font-size: 2rem !important;
+  }
+
+  .title-row-bottom {
+    font-size: 1.85rem !important;
+  }
+
+  .menu-nav {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    max-width: 96vw !important;
+    gap: 8px !important;
+  }
+
+  .menu-banner-card {
+    width: min(280px, 48%) !important;
+    height: 76px !important;
+    padding: 0 12px !important;
+  }
+
+  .banner-title {
+    font-size: 1.15rem !important;
+  }
+
+  .banner-card-avatar {
+    height: 68px !important;
+    right: 8px !important;
+  }
+
+  .trio-dog {
+    height: 58px !important;
+  }
+
+  /* Màn chọn nhân vật khi xoay ngang */
+  #screen-character-select {
+    padding: calc(48px + var(--safe-t)) 14px calc(64px + var(--safe-b)) !important;
+  }
+
+  .select-layout {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+  }
+
+  .select-preview-panel {
+    order: initial !important;
+    width: 220px !important;
+    flex-direction: column !important;
+    padding: 10px !important;
+    gap: 8px !important;
+  }
+
+  .preview-dog-canvas,
+  #preview-canvas {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .select-footer {
+    padding: 8px 20px calc(8px + var(--safe-b)) !important;
+  }
+
+  #btn-confirm-character {
+    padding: 8px 24px 6px !important;
+    font-size: 1.05rem !important;
+  }
+
+  /* Đấu trường khi xoay ngang */
+  #gauge-wrapper {
+    padding-top: calc(4px + var(--safe-t)) !important;
+  }
+
+  #battle-hud {
+    padding-top: 0 !important;
+    gap: 1px !important;
+  }
+
+  .battle-timer {
+    font-size: 1.7rem !important;
+  }
+
+  #gauge-track {
+    height: 15px !important;
+  }
+
+  #bottom-hud {
+    bottom: calc(56px + var(--safe-b)) !important;
+  }
+
+  .tap-bark-btn {
+    bottom: calc(8px + var(--safe-b)) !important;
+  }
+
+  .tap-bark-inner {
+    padding: 8px 28px 6px !important;
+  }
+
+  .tap-bark-text {
+    font-size: 1.25rem !important;
+  }
+
+  .countdown-number {
+    margin-top: 8vh !important;
+  }
+}

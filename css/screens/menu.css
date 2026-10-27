@@ -1,0 +1,165 @@
+/* ═══════════════════════════════════════════
+   menu.css — Menu screen styles
+   ═══════════════════════════════════════════ */
+
+#screen-menu {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(245,166,35,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 20% 30%, rgba(232,64,64,0.06) 0%, transparent 60%),
+    linear-gradient(160deg, #0D0D20 0%, #080810 60%, #100808 100%);
+  overflow-x: hidden;
+  overflow-y: auto;
+  justify-content: flex-start;   /* + margin:auto ở .menu-content → căn giữa nhưng vẫn cuộn được */
+}
+.logo-img { display: block; max-width: min(80vw, 440px); max-height: 32vh; object-fit: contain; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.6)); }
+
+/* ── Background paw prints ── */
+.menu-bg-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-paw {
+  position: absolute;
+  font-size: 5rem;
+  opacity: 0.04;
+  animation: driftPaw 8s ease-in-out infinite;
+  user-select: none;
+}
+.bg-paw-1 { top: 10%;  left: 5%;   animation-delay: 0s;   transform: rotate(-20deg); }
+.bg-paw-2 { top: 60%;  right: 8%;  animation-delay: -3s;  transform: rotate(30deg); font-size: 8rem; }
+.bg-paw-3 { bottom: 5%; left: 30%; animation-delay: -5s;  transform: rotate(10deg); font-size: 3rem; }
+.bg-paw-4 { top: 30%;  right: 25%; animation-delay: -1.5s;transform: rotate(-40deg); font-size: 4rem; }
+
+@keyframes driftPaw {
+  0%, 100% { transform: translateY(0) rotate(var(--r, -20deg)); }
+  50%       { transform: translateY(-20px) rotate(var(--r, -20deg)); }
+}
+
+/* ── Menu content ── */
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  margin: auto;
+  padding: calc(16px + var(--safe-t)) 16px calc(16px + var(--safe-b));
+  z-index: 1;
+  animation: fadeInUp 0.6s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Logo ── */
+.menu-logo {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo-paws {
+  font-size: 1.8rem;
+  letter-spacing: 8px;
+  animation: bouncePaws 1.5s ease-in-out infinite;
+}
+@keyframes bouncePaws {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  line-height: 0.88;
+  letter-spacing: 6px;
+  color: #FFF;
+  text-shadow:
+    0 0 40px rgba(245,166,35,0.8),
+    0 0 80px rgba(245,166,35,0.3),
+    4px 4px 0 rgba(0,0,0,0.5);
+  animation: logoPulse 2.5s ease-in-out infinite;
+}
+
+.logo-accent {
+  color: var(--c-primary);
+  display: block;
+}
+
+@keyframes logoPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 40px rgba(245,166,35,0.8),
+      0 0 80px rgba(245,166,35,0.3),
+      4px 4px 0 rgba(0,0,0,0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 60px rgba(245,166,35,1),
+      0 0 120px rgba(245,166,35,0.5),
+      4px 4px 0 rgba(0,0,0,0.5);
+  }
+}
+
+.logo-sub {
+  font-family: var(--font-ui);
+  font-weight: 900;
+  font-size: 0.85rem;
+  letter-spacing: 5px;
+  color: var(--c-text-3);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── Nav ── */
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.btn-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* ── WP display ── */
+.menu-wp-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--c-primary);
+  background: rgba(245,166,35,0.08);
+  border: 1px solid rgba(245,166,35,0.25);
+  padding: 8px 22px;
+  border-radius: var(--r-full);
+  box-shadow: 0 0 20px rgba(245,166,35,0.1);
+}
+.wp-value {
+  font-size: 1.4rem;
+  transition: transform 0.3s var(--t-slow);
+}
+.wp-label {
+  font-size: 0.9rem;
+  color: var(--c-text-3);
+}
+
+/* ── Responsive ── */
+@media (max-height: 600px) {
+  .menu-logo { gap: 2px; }
+  .logo-text { font-size: clamp(2.5rem, 7vw, 4rem); }
+  .menu-nav { gap: 8px; }
+  .menu-content { gap: 20px; }
+}

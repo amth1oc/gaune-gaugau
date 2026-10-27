@@ -1,0 +1,132 @@
+/* ═══════════════════════════════════════════
+   online.css — Sảnh chơi online 2 người
+   ═══════════════════════════════════════════ */
+
+.btn-online {
+  background: linear-gradient(145deg, #4a9cf0, #2a5fb8); color: #fff;
+  box-shadow: 0 4px 0 #17366e, 0 6px 20px rgba(74, 156, 240, 0.35);
+}
+.btn-online:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #17366e, 0 10px 30px rgba(74, 156, 240, 0.5); }
+.btn-online:active { transform: translateY(2px); box-shadow: 0 2px 0 #17366e; }
+
+#screen-online {
+  justify-content: flex-start;
+  padding: calc(70px + var(--safe-t)) 16px calc(24px + var(--safe-b));
+  background: radial-gradient(ellipse at 70% 15%, rgba(74, 156, 240, 0.10) 0%, transparent 60%), var(--c-bg);
+}
+
+.online-box { width: min(560px, 100%); display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.online-card {
+  width: 100%; padding: 18px 20px; text-align: center;
+  background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--r-lg);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.online-card h3 { font-family: var(--font-display); letter-spacing: 3px; font-size: 1.3rem; color: var(--c-primary); }
+.online-card p { font-size: 0.82rem; color: var(--c-text-2); }
+.online-or { font-size: 0.75rem; font-weight: 800; letter-spacing: 3px; color: var(--c-text-3); text-transform: uppercase; }
+
+.join-code {
+  width: 11ch; padding: 10px 12px; text-align: center;
+  font: 900 1.6rem 'Be Vietnam Pro', monospace; letter-spacing: 6px; text-transform: uppercase;
+  color: #fff; background: rgba(255, 255, 255, 0.07);
+  border: 2px solid var(--c-border); border-radius: var(--r-md); outline: none;
+  user-select: text; -webkit-user-select: text;
+}
+.join-code:focus { border-color: #4a9cf0; }
+
+.online-msg { min-height: 1.4em; margin-top: 12px; font-size: 0.85rem; font-weight: 700; color: var(--c-warning); text-align: center; max-width: 520px; }
+.online-msg.ok { color: var(--c-success); }
+
+/* Trong phòng */
+.room-code-wrap { text-align: center; }
+.room-code-label { font-size: 0.65rem; font-weight: 900; letter-spacing: 4px; color: var(--c-text-3); text-transform: uppercase; }
+.room-code {
+  font: 900 3rem 'Be Vietnam Pro', monospace; letter-spacing: 10px; padding-left: 10px;
+  color: #ffd75a; text-shadow: 0 0 24px rgba(255, 215, 90, 0.35); user-select: text; -webkit-user-select: text;
+}
+.room-copy {
+  margin-top: 4px; padding: 6px 14px; font: 800 0.75rem 'Be Vietnam Pro', sans-serif;
+  color: var(--c-text-2); background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--c-border); border-radius: var(--r-sm); cursor: pointer;
+}
+.room-copy:hover { background: rgba(255, 255, 255, 0.13); }
+.room-status { font-size: 0.9rem; font-weight: 800; color: var(--c-text-2); text-align: center; }
+.room-status.ok { color: var(--c-success); }
+
+.room-players { display: flex; align-items: stretch; gap: 10px; width: 100%; }
+.room-slot {
+  flex: 1; min-width: 0; padding: 12px 8px; text-align: center;
+  background: var(--c-bg-card); border: 2px solid var(--c-border); border-radius: var(--r-md);
+  display: flex; flex-direction: column; gap: 4px; align-items: center;
+}
+.room-slot.ready { border-color: var(--c-success); }
+.slot-who { font-size: 0.6rem; font-weight: 900; letter-spacing: 3px; color: var(--c-text-3); }
+.slot-char { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 1px; min-height: 1.4em; }
+.slot-ready { font-size: 0.7rem; font-weight: 800; color: var(--c-text-3); min-height: 1.1em; }
+.room-slot.ready .slot-ready { color: var(--c-success); }
+.room-vs { align-self: center; font-family: var(--font-display); font-size: 1.4rem; color: var(--c-text-3); }
+
+.room-pick-title { font-size: 0.7rem; font-weight: 900; letter-spacing: 3px; color: var(--c-text-3); text-transform: uppercase; }
+.room-chars { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.room-char {
+  display: flex; align-items: center; gap: 6px; padding: 8px 12px;
+  background: var(--c-bg-card); border: 2px solid var(--c-border); border-radius: var(--r-md);
+  color: var(--c-text); font: 800 0.85rem 'Be Vietnam Pro', sans-serif; cursor: pointer;
+}
+.room-char.selected { border-color: var(--c-primary); box-shadow: 0 0 14px var(--c-primary-glow); }
+.room-char img { width: 1.4rem; height: 1.4rem; object-fit: contain; }
+.room-ping { font-size: 0.65rem; color: var(--c-text-3); min-height: 1em; }
+
+@media (max-width: 600px) {
+  .room-code { font-size: 2.4rem; letter-spacing: 7px; }
+  #online-room .menu-btn { width: 100%; }
+}
+
+/* Trạng thái máy chủ ghép phòng */
+.server-status {
+  width: 100%; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
+  padding: 8px 12px; font-size: 0.78rem; font-weight: 700; color: var(--c-text-2);
+  background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--r-md);
+}
+.server-dot { width: 10px; height: 10px; border-radius: 50%; background: #888; flex-shrink: 0; }
+.server-status.checking .server-dot { background: #f5a623; animation: srvPulse 0.8s ease-in-out infinite; }
+.server-status.good .server-dot { background: #2ecc71; }
+.server-status.slow .server-dot { background: #f5a623; }
+.server-status.bad  .server-dot { background: #e74c3c; }
+.server-status.bad #server-text { color: var(--c-warning); }
+.server-recheck {
+  padding: 3px 10px; font: 800 0.7rem 'Be Vietnam Pro', sans-serif; color: var(--c-text-2);
+  background: rgba(255,255,255,0.07); border: 1px solid var(--c-border); border-radius: var(--r-sm); cursor: pointer;
+}
+.server-recheck:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
+.server-recheck:disabled { opacity: 0.5; cursor: default; }
+@keyframes srvPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+.online-tip {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(74, 156, 240, 0.08);
+  border: 1px dashed rgba(74, 156, 240, 0.35);
+  border-radius: var(--r-md);
+  font-size: 0.76rem;
+  color: var(--c-text-2);
+  line-height: 1.45;
+  text-align: left;
+}
+.online-tip strong { color: #5eb5f7; }
+.room-hint {
+  font-size: 0.74rem;
+  color: #f5a623;
+  margin-top: 6px;
+  font-weight: 600;
+  max-width: 420px;
+  line-height: 1.4;
+}
+
+/* Chẩn đoán xuyên NAT + chất lượng kết nối */
+.net-diag { width: 100%; padding: 8px 12px; font-size: 0.74rem; font-weight: 700; line-height: 1.5; color: var(--c-text-2);
+  background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--r-md); text-align: center; }
+.net-diag.bad  { color: var(--c-warning); }
+.net-diag.good { color: #7ee2a0; }
+.room-ping.q-good { color: #7ee2a0; } .room-ping.q-ok { color: #f5c04a; } .room-ping.q-bad { color: #ff7a66; }
+#battle-ping.q-good { color: #7ee2a0; } #battle-ping.q-ok { color: #f5c04a; } #battle-ping.q-bad { color: #ff7a66; }

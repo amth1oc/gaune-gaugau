@@ -1,0 +1,57 @@
+/* ═══════════════════════════════════════════════════════════
+   Chế độ TIẾT KIỆM (máy yếu) — bật bằng <html data-perf="lite">
+   Tắt các hiệu ứng tốn GPU nhất: kính mờ, blend toàn màn hình, hoạt ảnh lặp vô hạn, đổ bóng filter.
+   Nạp CUỐI CÙNG nên ghi đè được mọi file khác.
+   ═══════════════════════════════════════════════════════════ */
+html[data-perf="lite"] {
+  --backdrop-blur: none;
+  --backdrop-blur-sm: none;
+}
+html[data-perf="lite"] *,
+html[data-perf="lite"] *::before,
+html[data-perf="lite"] *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  animation-iteration-count: 1 !important;      /* hoạt ảnh lặp → chỉ chạy 1 lần (vẫn bắn animationend để dọn phần tử) */
+  will-change: auto !important;
+}
+/* Bỏ kính mờ thì nền thẻ phải đặc hơn cho dễ đọc (giống nhánh @supports not backdrop-filter) */
+html[data-perf="lite"] .menu-wp-display,
+html[data-perf="lite"] .menu-icon-btn,
+html[data-perf="lite"] .menu-banner-card,
+html[data-perf="lite"] .char-card,
+html[data-perf="lite"] .select-preview-panel,
+html[data-perf="lite"] .stage-chip,
+html[data-perf="lite"] .select-footer,
+html[data-perf="lite"] .settings-group,
+html[data-perf="lite"] .online-card,
+html[data-perf="lite"] .room-slot,
+html[data-perf="lite"] .result-panel,
+html[data-perf="lite"] #mic-section,
+html[data-perf="lite"] #combo-display,
+html[data-perf="lite"] #bark-total-display {
+  background: var(--glass-brown-solid, rgba(40, 24, 16, 0.94)) !important;
+}
+/* Lớp phủ màu toàn màn hình: bỏ blend multiply (bắt GPU trộn lại cả khung hình mỗi frame) */
+html[data-perf="lite"] #tint-warm,
+html[data-perf="lite"] #tint-cool,
+html[data-perf="lite"] .result-tint { mix-blend-mode: normal !important; }
+/* Bỏ đổ bóng filter (rất nặng với ảnh lớn) */
+html[data-perf="lite"] .menu-hero,
+html[data-perf="lite"] .logo-img,
+html[data-perf="lite"] img { filter: none !important; }
+/* Trang trí lơ lửng */
+html[data-perf="lite"] .bg-paw { display: none !important; }
+
+/* ── Ngoại lệ: phần HƯỚNG DẪN (onboarding) phải lặp liên tục ──
+   Ở trên lite ép mọi hoạt ảnh chỉ chạy 1 lần → hình minh hoạ hướng dẫn đứng yên sau vài giây.
+   Hình minh hoạ chỉ chạy ở thẻ đang xem (onboarding.css đã pause các thẻ khác và màn hình ẩn) nên chi phí rất nhỏ.
+   Chỉ bật khi người dùng KHÔNG yêu cầu "giảm chuyển động" của hệ điều hành. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-perf="lite"] .ob-slide.on .ob-art,
+  html[data-perf="lite"] .ob-slide.on .ob-art *,
+  html[data-perf="lite"] .ob-stage.wait .ob-core span,
+  html[data-perf="lite"] .ob-trophy {
+    animation-iteration-count: infinite !important;
+  }
+}

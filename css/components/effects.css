@@ -1,0 +1,43 @@
+/* ═══════════════════════════════════════════
+   effects.css — Chữ sủa dày đặc, vệt gạch vàng, combo
+   ═══════════════════════════════════════════ */
+
+#effects-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 8; overflow: hidden; }
+
+/* Chữ sủa: kiểu chữ + màu + kích thước do BarkTextEffect.js đặt theo từng chữ */
+.bark-word {
+  position: absolute;
+  line-height: 1; white-space: nowrap; pointer-events: none;
+  will-change: transform, opacity;
+  -webkit-text-stroke: 1.5px rgba(70, 20, 0, 0.55);
+  paint-order: stroke fill;
+  text-shadow: 1px 2px 0 rgba(60, 20, 0, 0.35);
+  mix-blend-mode: normal;
+}
+
+/* Vệt gạch vàng bắn tia */
+.bark-streak {
+  position: absolute; pointer-events: none; border-radius: 3px;
+  transform-origin: center; will-change: transform, opacity;
+  box-shadow: 0 0 6px rgba(255, 190, 40, 0.6);
+}
+
+/* Combo popup */
+.combo-popup {
+  position: absolute;
+  font-family: 'Baloo 2', var(--font-display);
+  font-size: 1.4rem; letter-spacing: 2px; color: #ffd21f;
+  -webkit-text-stroke: 1.5px #5a2a00; paint-order: stroke fill;
+  animation: comboPop 1.2s ease forwards; pointer-events: none;
+  text-shadow: 0 0 15px rgba(255, 190, 40, 0.6);
+}
+@keyframes comboPop {
+  0%   { opacity: 0; transform: scale(0.5) translateY(0); }
+  15%  { opacity: 1; transform: scale(1.2) translateY(0); }
+  80%  { opacity: 1; transform: scale(1) translateY(-30px); }
+  100% { opacity: 0; transform: scale(0.9) translateY(-50px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bark-streak { display: none; }
+}

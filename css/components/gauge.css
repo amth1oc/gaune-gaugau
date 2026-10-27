@@ -1,0 +1,68 @@
+/* ═══════════════════════════════════════════
+   gauge.css — Thanh kéo co kiểu video: 2 màu (hồng-cam của bạn / xanh dương của đối thủ),
+   con trượt có chữ "50%", tên hai bên. Nét viền như vẽ tay.
+   ═══════════════════════════════════════════ */
+
+#gauge-wrapper {
+  padding: calc(10px + var(--safe-t)) calc(54px + var(--safe-r)) 4px calc(14px + var(--safe-l));
+  flex-shrink: 0;
+}
+
+#gauge-track {
+  position: relative;
+  height: 18px;
+  /* phần còn lại = màu xanh dương của đối thủ; nét cọ dọc cho cảm giác vẽ tay */
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.20) 0 2px, rgba(30,50,90,0.07) 2px 5px),
+    linear-gradient(180deg, #a9c4e6, #86a6d4);
+  border: 2px solid #5b3c26;
+  border-radius: 7px 10px 8px 9px / 9px 7px 10px 8px;
+  box-shadow: 0 2px 6px rgba(40,20,0,0.35);
+  overflow: visible;
+}
+
+/* Phần của BẠN (từ trái tới con trượt) */
+#gauge-fill-player {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 50%;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.22) 0 2px, rgba(120,40,20,0.06) 2px 5px),
+    linear-gradient(180deg, #f6b49c, #ef9a7c);
+  border-radius: 5px 0 0 6px / 7px 0 0 7px;
+  /* không transition: JS đã làm mượt (GaugeController.displayValue) */
+}
+
+/* Con trượt có chữ % (phần trăm bạn đang chiếm) */
+#gauge-indicator {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 40px; padding: 1px 7px;
+  background: #fffaf0;
+  border: 2px solid #5b3c26;
+  border-radius: 999px;
+  box-shadow: 0 2px 5px rgba(40,20,0,0.45);
+  z-index: 2; pointer-events: none;
+  text-align: center; line-height: 1.25;
+}
+#gauge-pct {
+  font-family: 'Be Vietnam Pro', sans-serif; font-weight: 900; font-size: 0.66rem; color: #5b3c26; letter-spacing: 0.5px;
+}
+#gauge-indicator.danger-player { border-color: #e2552e; animation: indicatorPulse 0.4s ease-in-out infinite; }
+#gauge-indicator.danger-ai     { border-color: #3d68b8; animation: indicatorPulse 0.4s ease-in-out infinite; }
+@keyframes indicatorPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%      { transform: translate(-50%, -50%) scale(1.18); }
+}
+
+/* Tên hai bên, dưới thanh */
+.gauge-labels {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 3px; padding: 0 4px;
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(30,15,0,0.85);
+}
+.gauge-label-player, .gauge-label-ai {
+  max-width: 38%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gauge-label-player { color: #ffd2c0; }
+.gauge-label-ai     { color: #cfe0f8; text-align: right; }
+.battle-ping { font-size: 0.6rem; color: rgba(255,255,255,0.6); font-weight: 700; }

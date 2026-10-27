@@ -1,0 +1,35 @@
+/* ═══════════════════════════════════════════════════════
+   theme.css — Sunset Glass Arena Color System
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  --c-sunset-gold:      #F8C66A;
+  --c-espresso:         #42271F;
+  --c-espresso-deep:    #241510;
+  --c-cream-glass:      #F8E7CA;
+  --c-terracotta:       #E87539;
+  --c-warm-white:       #F5F0E9;
+
+  --c-bg:               #241510;
+  --c-bg-2:             #42271F;
+  --c-bg-card:          rgba(var(--rgb-brown), 0.65);
+  --c-bg-card-2:        rgba(var(--rgb-cream), 0.18);
+  --c-border:           rgba(245, 240, 233, 0.22);
+
+  --c-primary:          #F8C66A;
+  --c-primary-dark:     #D97706;
+  --c-primary-glow:     rgba(248, 198, 106, 0.40);
+
+  --c-ai:               #4AA3FF;
+  --c-mint:             #38B2AC;
+  --c-text:             #F5F0E9;
+  --c-text-2:           rgba(245, 240, 233, 0.88);
+  --c-text-3:           rgba(245, 240, 233, 0.65);
+
+  --c-success:          #38B2AC;
+  --c-danger:           #E87539;
+  --c-warning:          #F8C66A;
+
+  --font-display:       'Baloo 2', system-ui, sans-serif;
+  --font-ui:            'Be Vietnam Pro', system-ui, sans-serif;
+}

@@ -1,0 +1,52 @@
+{
+  "_help": "Mọi thứ trong file này đều TUỲ CHỌN. Game tự dò mọi file trong assets/ theo tên (xem assets/README.md). File này chỉ để chỉnh thêm: scale/offsetY/facing của nhân vật, groundY của nền, âm thanh.",
+  "settings": {
+    "probe": true,
+    "pixelArt": false,
+    "keepCodeDrawn": false
+  },
+  "backgrounds": {},
+  "characters": {
+    "shiba": {
+      "scale": 1.15
+    },
+    "golden": {
+      "scale": 1.15
+    },
+    "husky": {
+      "scale": 1.15
+    },
+    "corgi": {
+      "scale": 1.15
+    },
+    "pug": {
+      "scale": 1.15
+    },
+    "poodle": {
+      "scale": 1.15
+    },
+    "beagle": {
+      "scale": 1.15
+    },
+    "labrador": {
+      "scale": 1.15
+    },
+    "malamute": {
+      "scale": 1.15
+    }
+  },
+  "ui": {},
+  "audio": {
+    "menuMusic": [],
+    "battleMusic": [],
+    "bark": [],
+    "aiBark": [],
+    "combo": [],
+    "ko": [],
+    "win": [],
+    "lose": [],
+    "click": [],
+    "countdownTick": [],
+    "countdownGo": []
+  }
+}
